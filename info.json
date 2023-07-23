@@ -1,0 +1,20 @@
+{
+    "name": "WebP Converter",
+    "slug": "webp-converter",
+    "author": "<a href='https://www.lexo.ch/'>LEXO GmbH</a>",
+    "author_profile": "https://github.com/lexo-ch/",
+    "donate_link": "https://www.lexo.ch/",
+    "version": "1.0.0",
+    "download_url": "https://github.com/lexo-ch/webp-converter/releases/download/v1.0.0/webp-converter-1.0.0.zip",
+    "requires": "4.7",
+    "tested": "6.2.2",
+    "requires_php": "7.4.1",
+    "sections": {
+        "description": "Automatically converts images to WebP format upon upload.<br><a href='https://github.com/lexo-ch/webp-converter/' target='_blank'>More about plugin</a>",
+        "changelog": "Click <a href='https://github.com/lexo-ch/webp-converter/releases/latest/' target='_blank'>here</a> to see changelog."
+    },
+    "banners": {
+        "low": "",
+        "high": ""
+    }
+}

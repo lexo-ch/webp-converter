@@ -1,0 +1,32 @@
+{
+    "name": "lexo/webp-converter",
+    "description": "Automatically converts images to WebP format upon upload.",
+    "version": "1.0.0",
+    "homepage": "https://www.lexo.ch/",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "LEXO GmbH",
+            "email": "websupport@lexo.ch"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "LEXO\\WebPC\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.4.1",
+        "tronyx/asset-loader": "^2.1",
+        "lexo/plugin-updater": "^1.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "npm install",
+            "npx mix build"
+        ]
+    }
+}
