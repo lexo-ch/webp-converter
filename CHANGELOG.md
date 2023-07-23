@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/lexo-ch/webp-converter/compare/v1.0.1...v1.0.2) (2023-07-23)
+
+
+### Bug Fixes
+
+* **core:** Add next auto-update time ([1f1f8de](https://github.com/lexo-ch/webp-converter/commit/1f1f8ded53258e121dd04c9ac920a107aea7dab2))
+
 ## [1.0.1](https://github.com/lexo-ch/webp-converter/compare/v1.0.0...v1.0.1) (2023-07-23)
 
 
