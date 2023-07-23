@@ -14,7 +14,7 @@
         "changelog": "Click <a href='https://github.com/lexo-ch/webp-converter/releases/latest/' target='_blank'>here</a> to see changelog."
     },
     "banners": {
-        "low": "",
-        "high": ""
+        "low": "https://raw.githubusercontent.com/lexo-ch/webp-converter/master/banners/banner-1544x500.webp",
+        "high": "https://raw.githubusercontent.com/lexo-ch/webp-converter/master/banners/banner-1544x500.webp"
     }
 }
