@@ -3,7 +3,8 @@
 namespace LEXO\WebPC\Core\Plugin;
 
 use const LEXO\WebPC\{
-    FIELD_NAME
+    FIELD_NAME,
+    CACHE_KEY
 };
 
 class SettingsPage
@@ -51,6 +52,14 @@ class SettingsPage
                     </div>
 
                     <hr>
+
+                    <?php $nextAutoUpdateCheck = PluginService::nextAutoUpdateCheck();
+
+                    if ($nextAutoUpdateCheck) { ?>
+                        <div id="next-tauto-update-check">
+                            <?php echo sprintf(__('Next automatic update check at <b>%s</b>.', 'webpc'), $nextAutoUpdateCheck); ?>
+                        </div>
+                    <?php } ?>
 
                     <a
                         href="<?php echo PluginService::getManualUpdateCheckLink(); ?>"

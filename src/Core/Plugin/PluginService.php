@@ -68,7 +68,7 @@ class PluginService extends Singleton
         if (!extension_loaded('gd') || !function_exists('gd_info')) {
             $this->notices->add(
                 $this->notice->message(
-                    __('The GD PHP extension is required for the WebP Converter plugin to work.', 'webc')
+                    __('The GD PHP extension is required for the WebP Converter plugin to work.', 'webpc')
                 )
                 ->type('error')
             );
@@ -212,6 +212,18 @@ class PluginService extends Singleton
         }
 
         exit;
+    }
+
+    public static function nextAutoUpdateCheck()
+    {
+        $expiration_datetime = get_option('_transient_timeout_' . CACHE_KEY);
+
+        if (!$expiration_datetime) {
+            return false;
+        }
+
+        return wp_date(get_option('date_format') . ' ' . get_option('time_format'), $expiration_datetime);
+        ;
     }
 
     public function noUpdatesNotice()

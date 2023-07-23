@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebP Converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-07-23 15:49+0000\n"
+"POT-Creation-Date: 2023-07-23 22:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Automatically converts images to WebP format upon upload."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:17
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:18
 msgid "Compression settings"
 msgstr ""
 
@@ -46,7 +46,7 @@ msgstr ""
 msgid "https://www.lexo.ch"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:295
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:305
 msgid "JPG"
 msgstr ""
 
@@ -54,39 +54,48 @@ msgstr ""
 msgid "LEXO GmbH"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:58
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:67
 msgid "Manually check for update"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:98
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:60
+#, php-format
+msgid "Next automatic update check at <b>%s</b>."
+msgstr ""
+
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:100
 #, php-format
 msgid "Plugin %s has been updated."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:200
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:202
 #, php-format
 msgid "Plugin %s is up to date."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:47
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:48
 msgid "Save settings"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:191
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:193
 msgid "Security check failed."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:166
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:168
 msgid "Settings"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:80
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:71
+msgid "The GD PHP extension is required for the WebP Converter plugin to work."
+msgstr ""
+
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:82
 msgid "This user doesn't have persmission to run this plugin."
 msgstr ""
 
 #. Name of the plugin
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:15
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:251
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginSettings.php:252
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:16
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:261
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:262
 msgid "WebP Converter"
 msgstr ""
