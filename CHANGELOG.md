@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/lexo-ch/webp-converter/compare/v1.0.5...v1.0.6) (2023-07-24)
+
+
+### Bug Fixes
+
+* **core:** Fix settings link when filter applied ([3f06dc9](https://github.com/lexo-ch/webp-converter/commit/3f06dc97816d3ef6ccdf861bfaaed69100c5ee46))
+
 ## [1.0.5](https://github.com/lexo-ch/webp-converter/compare/v1.0.4...v1.0.5) (2023-07-24)
 
 
