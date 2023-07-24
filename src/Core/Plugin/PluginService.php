@@ -152,11 +152,17 @@ class PluginService extends Singleton
 
     public static function getOptionsLink()
     {
+        $path = self::getSettingsPageParentSlug();
+
+        if (strpos($path, '.php') === false) {
+            $path = 'admin.php';
+        }
+
         return esc_url(
             add_query_arg(
                 'page',
                 self::SETTINGS_PAGE_SLUG,
-                admin_url(self::getSettingsPageParentSlug())
+                admin_url($path)
             )
         );
     }
