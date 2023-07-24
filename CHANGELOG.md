@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/lexo-ch/webp-converter/compare/v1.0.2...v1.0.3) (2023-07-24)
+
+
+### Bug Fixes
+
+* **core:** Fix PluginService class name ([f52f796](https://github.com/lexo-ch/webp-converter/commit/f52f7969a3255d6c29aafa59bd4382659c7b16b1))
+
 ## [1.0.2](https://github.com/lexo-ch/webp-converter/compare/v1.0.1...v1.0.2) (2023-07-23)
 
 
