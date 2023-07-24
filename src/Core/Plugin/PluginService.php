@@ -112,7 +112,7 @@ class PluginService extends Singleton
     {
         $capability = self::MANAGE_PLUGIN_CAP;
 
-        $capability = apply_filters(self::$namespace . '/options_capability', $capability);
+        $capability = apply_filters(self::$namespace . '/options-page/capability', $capability);
 
         return $capability;
     }
@@ -121,7 +121,7 @@ class PluginService extends Singleton
     {
         $slug = self::SETTINGS_PARENT_SLUG;
 
-        $slug = apply_filters(self::$namespace . '/options_parent_slug', $slug);
+        $slug = apply_filters(self::$namespace . '/options-page/parent-slug', $slug);
 
         return $slug;
     }
