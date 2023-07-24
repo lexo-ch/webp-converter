@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/lexo-ch/webp-converter/compare/v1.0.3...v1.0.4) (2023-07-24)
+
+
+### Bug Fixes
+
+* **core:** Fix options page filters ([b94208e](https://github.com/lexo-ch/webp-converter/commit/b94208ecdaf8c208dcd59293cd586c47879bfa5f))
+
 ## [1.0.3](https://github.com/lexo-ch/webp-converter/compare/v1.0.2...v1.0.3) (2023-07-24)
 
 
