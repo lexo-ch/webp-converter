@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/lexo-ch/webp-converter/compare/v1.0.4...v1.0.5) (2023-07-24)
+
+
+### Bug Fixes
+
+* **core:** Fix settings page parent ([30a71c4](https://github.com/lexo-ch/webp-converter/commit/30a71c47af264e35ba8163376a825b2371c98533))
+
 ## [1.0.4](https://github.com/lexo-ch/webp-converter/compare/v1.0.3...v1.0.4) (2023-07-24)
 
 
