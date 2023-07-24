@@ -156,7 +156,7 @@ class PluginService extends Singleton
             add_query_arg(
                 'page',
                 self::SETTINGS_PAGE_SLUG,
-                admin_url(self::SETTINGS_PARENT_SLUG)
+                admin_url(self::getSettingsPageParentSlug())
             )
         );
     }
