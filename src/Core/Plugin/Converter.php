@@ -27,11 +27,16 @@ class Converter
                 case 'jpg':
                 case 'jpeg':
                     $image = imagecreatefromjpeg($file['file']);
+                    imagepalettetotruecolor($image);
                     $quality = PluginService::getPluginSettings()['types']['jpg']['compression'];
 
                     break;
                 case 'png':
                     $image = imagecreatefrompng($file['file']);
+
+                    imagepalettetotruecolor($image);
+                    imagealphablending($image, true);
+                    imagesavealpha($image, true);
 
                     break;
             }
