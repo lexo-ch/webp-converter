@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/lexo-ch/webp-converter/compare/v1.0.6...v1.0.7) (2023-07-25)
+
+
+### Bug Fixes
+
+* **core:** Convert pallete to true color ([70794f5](https://github.com/lexo-ch/webp-converter/commit/70794f58bbac377a9293bc09bb0893f111153d89))
+
 ## [1.0.6](https://github.com/lexo-ch/webp-converter/compare/v1.0.5...v1.0.6) (2023-07-24)
 
 
