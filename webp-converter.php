@@ -106,13 +106,13 @@ register_deactivation_hook(FILE, function () {
     (new Deactivation())->run();
 });
 
-if (!function_exists('cf_uninstall')) {
-    function cf_uninstall()
+if (!function_exists('webpc_uninstall')) {
+    function webpc_uninstall()
     {
         (new Uninstalling())->run();
     }
 }
-register_uninstall_hook(FILE, 'cf_uninstall');
+register_uninstall_hook(FILE, __NAMESPACE__ . '\webpc_uninstall');
 
 // Run the plugin
 if (!function_exists('run_cf')) {
