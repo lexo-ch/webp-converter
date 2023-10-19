@@ -1,3 +1,11 @@
+## [1.0.8](https://github.com/lexo-ch/webp-converter/compare/v1.0.7...v1.0.8) (2023-10-19)
+
+
+### Bug Fixes
+
+* **core:** Fix fatal error on plugin deletion ([54557f7](https://github.com/lexo-ch/webp-converter/commit/54557f7dac25e2e2f159d1af3baabf4c6cfc5ba0))
+* **deps:** Update dependencies ([5334a7f](https://github.com/lexo-ch/webp-converter/commit/5334a7f5d1631ef578f85c0c36a70aadb70a130d))
+
 ## [1.0.7](https://github.com/lexo-ch/webp-converter/compare/v1.0.6...v1.0.7) (2023-07-25)
 
 
