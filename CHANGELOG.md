@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/lexo-ch/webp-converter/compare/v1.1.0...v1.1.1) (2023-10-25)
+
+
+### Bug Fixes
+
+* **core:** Bump tested WP and PHP versions to latest ([0ee2dd6](https://github.com/lexo-ch/webp-converter/commit/0ee2dd6576136296ff65af358c18c918a3f802ef))
+
 # [1.1.0](https://github.com/lexo-ch/webp-converter/compare/v1.0.8...v1.1.0) (2023-10-25)
 
 
