@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/lexo-ch/webp-converter/compare/v1.0.8...v1.1.0) (2023-10-25)
+
+
+### Bug Fixes
+
+* **deps:** Update dependencies ([76531fe](https://github.com/lexo-ch/webp-converter/commit/76531fe632d82bef519547cf9f99130c838c72b6))
+
+
+### Features
+
+* **core:** Keep smaller image (original or WebP) ([061dc10](https://github.com/lexo-ch/webp-converter/commit/061dc107ec429e7a1b4945dae75795343445d7c9))
+
 ## [1.0.8](https://github.com/lexo-ch/webp-converter/compare/v1.0.7...v1.0.8) (2023-10-19)
 
 
