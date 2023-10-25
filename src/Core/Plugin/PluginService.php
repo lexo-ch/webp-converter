@@ -92,12 +92,14 @@ class PluginService extends Singleton
             }
         }
 
+        $settings['keep-smaller'] = sanitize_text_field($_POST['keep-smaller']);
+
         update_option(FIELD_NAME, $settings);
 
         set_transient(
             DOMAIN . '_update_success_notice',
             sprintf(
-                __('Plugin %s has been updated.', 'webpc'),
+                __('The settings for the %s have been successfully saved.', 'webpc'),
                 PLUGIN_NAME
             ),
             HOUR_IN_SECONDS
@@ -279,13 +281,14 @@ class PluginService extends Singleton
                 'jpg' => [
                     'compression' => 85
                 ]
-            ]
+            ],
+            'keep-smaller' => 'on'
         ];
     }
 
     public static function getPluginSettings()
     {
-        return get_option(FIELD_NAME, []);
+        return wp_parse_args(get_option(FIELD_NAME, []), self::getInitSettings());
     }
 
     public static function allowedImageTypes(): array
@@ -307,8 +310,14 @@ class PluginService extends Singleton
 
         return [
             'jpg' => [
-                'compression' => $settings['types']['jpg']['compression'],
-                'translation' => __('JPG', 'webpc')
+                'type'          => 'number',
+                'value'         => $settings['types']['jpg']['compression'],
+                'translation'   => __('JPG', 'webpc')
+            ],
+            'keep-smaller' => [
+                'type'          => 'checkbox',
+                'value'         => $settings['keep-smaller'] ?? '',
+                'translation'   => __('Keep smaller image (WebP or original, whatever is smaller)', 'webpc')
             ]
         ];
     }

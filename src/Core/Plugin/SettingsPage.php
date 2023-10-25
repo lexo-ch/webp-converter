@@ -4,7 +4,6 @@ namespace LEXO\WebPC\Core\Plugin;
 
 use const LEXO\WebPC\{
     FIELD_NAME,
-    CACHE_KEY
 };
 
 class SettingsPage
@@ -24,23 +23,45 @@ class SettingsPage
 
                     wp_nonce_field(FIELD_NAME);
 
-                    $settingsPageFields = PluginService::getSettingsPageFields();
+                    $settingsPageFields = PluginService::getSettingsPageFields(); ?>
 
-                    foreach ($settingsPageFields as $type => $options) { ?>
-                        <label>
-                            <?php echo $options['translation']; ?>:
-                            <input
-                                required
-                                type="number"
-                                id="<?php echo "type-{$type}"; ?>"
-                                name="<?php echo $type; ?>"
-                                value="<?php echo $options['compression']; ?>"
-                                min="50"
-                                max="100"
-                                step="1"
-                            />%
-                        </label>
-                    <?php } ?>
+                    <div id="webp-converter-setting-settings-wrapper">
+                        <?php foreach ($settingsPageFields as $type => $options) { ?>
+                            <div class="row">
+                                <label>
+                                    <?php switch ($options['type']) {
+                                        case 'number':
+                                            ?>
+                                            <input
+                                                required
+                                                type="number"
+                                                id="<?php echo "type-{$type}"; ?>"
+                                                name="<?php echo $type; ?>"
+                                                value="<?php echo $options['value']; ?>"
+                                                min="50"
+                                                max="100"
+                                                step="1"
+                                            />
+                                            <?php echo in_array($type, ['jpg']) ? '%' : '';
+                                            break;
+
+                                        case 'checkbox':
+                                            ?>
+                                            <input
+                                                type="checkbox"
+                                                id="<?php echo "type-{$type}"; ?>"
+                                                name="<?php echo $type; ?>"
+                                                <?php checked($options['value'], 'on'); ?>
+                                            />
+                                            <?php
+                                            break;
+                                    } ?>
+
+                                    <?php echo $options['translation']; ?>
+                                </label>
+                            </div>
+                        <?php } ?>
+                    </div>
 
                     <div id="save-settings-holder">
                         <input

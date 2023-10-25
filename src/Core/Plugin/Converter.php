@@ -15,6 +15,8 @@ class Converter
         }
 
         try {
+            $settings = PluginService::getPluginSettings();
+
             $image = null;
 
             $file_info['filename'] = wp_unique_filename($file_info['dirname'], $file_info['filename'] . '.webp');
@@ -28,7 +30,7 @@ class Converter
                 case 'jpeg':
                     $image = imagecreatefromjpeg($file['file']);
                     imagepalettetotruecolor($image);
-                    $quality = PluginService::getPluginSettings()['types']['jpg']['compression'];
+                    $quality = $settings['types']['jpg']['compression'];
 
                     break;
                 case 'png':
@@ -45,14 +47,23 @@ class Converter
                 throw new Exception('Failed to create image resource');
             }
 
-            imagewebp($image, $webp_file_path, $quality);
+            ob_start();
+                imagewebp($image, null, $quality);
+            $webpData = ob_get_clean();
 
             imagedestroy($image);
 
-            unlink($file['file']);
+            if (
+                $settings['keep-smaller'] !== 'on'
+                || filesize($file['file']) > strlen($webpData)
+            ) {
+                file_put_contents($webp_file_path, $webpData);
 
-            $file['file'] = $webp_file_path;
-            $file['type'] = 'image/webp';
+                unlink($file['file']);
+
+                $file['file'] = $webp_file_path;
+                $file['type'] = 'image/webp';
+            }
         } catch (Exception $e) {
             error_log('WebP Converter: Failed to convert image to WebP format - ' . $e->getMessage());
         }

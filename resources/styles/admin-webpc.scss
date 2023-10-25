@@ -12,3 +12,15 @@
   font-style: italic;
   color: #909090;
 }
+
+#webp-converter-setting-settings-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .row {
+    label {
+      display: inline;
+    }
+  }
+}
