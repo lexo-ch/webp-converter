@@ -38,9 +38,9 @@ class SettingsPage
                                                 id="<?php echo esc_attr("type-{$type}"); ?>"
                                                 name="<?php echo esc_attr($type); ?>"
                                                 value="<?php echo esc_attr($options['value']); ?>"
-                                                min="50"
-                                                max="100"
-                                                step="1"
+                                                min="<?php echo esc_attr($options['min']); ?>"
+                                                max="<?php echo esc_attr($options['max']); ?>"
+                                                step="<?php echo esc_attr($options['step']); ?>"
                                             />
                                             <?php echo in_array($type, ['jpg']) ? '%' : '';
                                             break;

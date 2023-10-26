@@ -311,6 +311,9 @@ class PluginService extends Singleton
         return [
             'jpg' => [
                 'type'          => 'number',
+                'min'           => 50,
+                'max'           => 100,
+                'step'          => 1,
                 'value'         => $settings['types']['jpg']['compression'],
                 'translation'   => __('(Applies to WebP image created from uploaded JPG/JPEG image. Allowed values 50-100%)', 'webpc')
             ],
