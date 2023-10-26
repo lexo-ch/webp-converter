@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/lexo-ch/webp-converter/compare/v1.1.2...v1.1.3) (2023-10-26)
+
+
+### Bug Fixes
+
+* **core:** Make all type "number" attrs dynamic ([dc946a8](https://github.com/lexo-ch/webp-converter/commit/dc946a815b8b705f0e56ce5658eda78b8ae631c0))
+
 ## [1.1.2](https://github.com/lexo-ch/webp-converter/compare/v1.1.1...v1.1.2) (2023-10-26)
 
 
