@@ -14,10 +14,10 @@ class SettingsPage
             <div id="webp-converter-settings" class="wrap">
                 <h1><?php _e('WebP Converter', 'webpc'); ?></h1>
 
-                <h2><?php _e('Compression settings', 'webpc'); ?></h2>
+                <h2><?php _e('Compression quality settings', 'webpc'); ?></h2>
 
                 <form method="post" action="admin-post.php">
-                    <input type="hidden" name="action" value="<?php echo 'save_' . FIELD_NAME; ?>" />
+                    <input type="hidden" name="action" value="<?php echo esc_attr('save_' . FIELD_NAME); ?>" />
 
                     <?php
 
@@ -35,9 +35,9 @@ class SettingsPage
                                             <input
                                                 required
                                                 type="number"
-                                                id="<?php echo "type-{$type}"; ?>"
-                                                name="<?php echo $type; ?>"
-                                                value="<?php echo $options['value']; ?>"
+                                                id="<?php echo esc_attr("type-{$type}"); ?>"
+                                                name="<?php echo esc_attr($type); ?>"
+                                                value="<?php echo esc_attr($options['value']); ?>"
                                                 min="50"
                                                 max="100"
                                                 step="1"
@@ -49,8 +49,8 @@ class SettingsPage
                                             ?>
                                             <input
                                                 type="checkbox"
-                                                id="<?php echo "type-{$type}"; ?>"
-                                                name="<?php echo $type; ?>"
+                                                id="<?php echo esc_attr("type-{$type}"); ?>"
+                                                name="<?php echo esc_attr($type); ?>"
                                                 <?php checked($options['value'], 'on'); ?>
                                             />
                                             <?php
@@ -66,7 +66,7 @@ class SettingsPage
                     <div id="save-settings-holder">
                         <input
                             type="submit"
-                            value="<?php _e('Save settings', 'webpc'); ?>"
+                            value="<?php esc_attr_e('Save settings', 'webpc'); ?>"
                             class="button-primary"
                             id="save-settings"
                         />
@@ -77,7 +77,7 @@ class SettingsPage
                     <?php $nextAutoUpdateCheck = PluginService::nextAutoUpdateCheck();
 
                     if ($nextAutoUpdateCheck) { ?>
-                        <div id="next-tauto-update-check">
+                        <div id="next-auto-update-check">
                             <?php echo sprintf(__('Next automatic update check at <b>%s</b>.', 'webpc'), $nextAutoUpdateCheck); ?>
                         </div>
                     <?php } ?>

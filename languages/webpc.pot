@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WebP Converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-25 12:42+0000\n"
+"POT-Creation-Date: 2023-10-25 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -30,12 +30,18 @@ msgid ""
 "                    Go back to <a href=\"%s\">Dashboard</a>"
 msgstr ""
 
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:315
+msgid ""
+"(Applies to WebP image created from uploaded JPG/JPEG image. Allowed values "
+"50-100%)"
+msgstr ""
+
 #. Description of the plugin
 msgid "Automatically converts images to WebP format upon upload."
 msgstr ""
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:17
-msgid "Compression settings"
+msgid "Compression quality settings"
 msgstr ""
 
 #. URI of the plugin
@@ -44,10 +50,6 @@ msgstr ""
 
 #. Author URI of the plugin
 msgid "https://www.lexo.ch"
-msgstr ""
-
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:315
-msgid "JPG"
 msgstr ""
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:320

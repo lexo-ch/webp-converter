@@ -312,7 +312,7 @@ class PluginService extends Singleton
             'jpg' => [
                 'type'          => 'number',
                 'value'         => $settings['types']['jpg']['compression'],
-                'translation'   => __('JPG', 'webpc')
+                'translation'   => __('(Applies to WebP image created from uploaded JPG/JPEG image. Allowed values 50-100%)', 'webpc')
             ],
             'keep-smaller' => [
                 'type'          => 'checkbox',
