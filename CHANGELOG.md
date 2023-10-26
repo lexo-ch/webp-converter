@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/lexo-ch/webp-converter/compare/v1.1.1...v1.1.2) (2023-10-26)
+
+
+### Bug Fixes
+
+* **core:** Fix translations and escaping ([84dee79](https://github.com/lexo-ch/webp-converter/commit/84dee79326a514857d11560fa0860c2181404038))
+
 ## [1.1.1](https://github.com/lexo-ch/webp-converter/compare/v1.1.0...v1.1.1) (2023-10-25)
 
 
