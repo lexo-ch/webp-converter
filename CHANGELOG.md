@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/lexo-ch/webp-converter/compare/v1.1.3...v1.1.4) (2023-10-27)
+
+
+### Bug Fixes
+
+* **deps:** Update dependencies ([6b15873](https://github.com/lexo-ch/webp-converter/commit/6b1587351a618488a0d04e4fb37908a15b2193e1))
+
 ## [1.1.3](https://github.com/lexo-ch/webp-converter/compare/v1.1.2...v1.1.3) (2023-10-26)
 
 
