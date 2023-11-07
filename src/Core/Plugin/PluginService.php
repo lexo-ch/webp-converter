@@ -4,8 +4,8 @@ namespace LEXO\WebPC\Core\Plugin;
 
 use LEXO\WebPC\Core\Abstracts\Singleton;
 use LEXO\WebPC\Core\Traits\Helpers;
-use LEXO\Updater\PluginUpdater;
-use Tronyx\Asset\Loader;
+use LEXO\WebPC\Core\Loader\Loader;
+use LEXO\WebPC\Core\Updater\PluginUpdater;
 
 use const LEXO\WebPC\{
     ASSETS,
