@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/lexo-ch/webp-converter/compare/v1.1.4...v1.1.5) (2023-11-07)
+
+
+### Bug Fixes
+
+* **core:** Use Loader and Updater directly ([81ddb8e](https://github.com/lexo-ch/webp-converter/commit/81ddb8ea86a731156ccc4aad039257d22d2103ab))
+
 ## [1.1.4](https://github.com/lexo-ch/webp-converter/compare/v1.1.3...v1.1.4) (2023-10-27)
 
 
