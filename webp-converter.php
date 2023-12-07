@@ -68,15 +68,21 @@ use LEXO\WebPC\Core\Bootloader;
 
 // Define min PHP version
 !defined('LEXO\WebPC\MIN_PHP_VERSION')
-    && define('LEXO\WebPC\MIN_PHP_VERSION', '7.4.1');
+    && define('LEXO\WebPC\MIN_PHP_VERSION', get_file_data(FILE, [
+        'Requires PHP' => 'Requires PHP'
+    ])['Requires PHP']);
 
 // Define min WP version
 !defined('LEXO\WebPC\MIN_WP_VERSION')
-    && define('LEXO\WebPC\MIN_WP_VERSION', '4.7');
+    && define('LEXO\WebPC\MIN_WP_VERSION', get_file_data(FILE, [
+        'Requires at least' => 'Requires at least'
+    ])['Requires at least']);
 
 // Define Text domain
 !defined('LEXO\WebPC\DOMAIN')
-    && define('LEXO\WebPC\DOMAIN', 'webpc');
+    && define('LEXO\WebPC\DOMAIN', get_file_data(FILE, [
+        'Text Domain' => 'Text Domain'
+    ])['Text Domain']);
 
 // Define locales folder (with all translations)
 !defined('LEXO\WebPC\LOCALES')
@@ -114,42 +120,8 @@ if (!function_exists('webpc_uninstall')) {
 }
 register_uninstall_hook(FILE, __NAMESPACE__ . '\webpc_uninstall');
 
-// Run the plugin
-if (!function_exists('run_cf')) {
-    function run_cf()
-    {
-        global $wp_version;
-
-        if (version_compare(PHP_VERSION, MIN_PHP_VERSION, '<')) {
-            throw new Exception(
-                sprintf(
-                    __('%s requires PHP %s or greater.<br/>
-                    Go back to <a href="%s">Dashboard</a>', 'webpc'),
-                    PLUGIN_NAME,
-                    MIN_PHP_VERSION,
-                    get_dashboard_url()
-                )
-            );
-        }
-
-        if (version_compare($wp_version, MIN_WP_VERSION, '<')) {
-            throw new Exception(
-                sprintf(
-                    __('%s requires WordPress %s or greater.<br/>
-                    Go back to <a href="%s">Dashboard</a>', 'webpc'),
-                    PLUGIN_NAME,
-                    MIN_WP_VERSION,
-                    get_dashboard_url()
-                )
-            );
-        }
-
-        Bootloader::getInstance()->run();
-    }
-}
-
 try {
-    run_cf();
+    Bootloader::getInstance()->run();
 } catch (Exception $e) {
     require_once(ABSPATH . 'wp-admin/includes/plugin.php');
 
