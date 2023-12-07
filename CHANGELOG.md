@@ -1,3 +1,13 @@
+## [1.1.6](https://github.com/lexo-ch/webp-converter/compare/v1.1.5...v1.1.6) (2023-12-7)
+
+
+### Bug Fixes
+
+* **core:** Change of the plugin name ([1c86f01](https://github.com/lexo-ch/webp-converter/commit/1c86f018aaaf91ca2de5dc2919541ca5085613ec))
+* **core:** Restructure min PHP and WP checks ([6f2c89c](https://github.com/lexo-ch/webp-converter/commit/6f2c89c4593828ad6a968c35220ce95a48988887))
+* **deps:** Update dependencies ([3d59303](https://github.com/lexo-ch/webp-converter/commit/3d593035d0cdbe719773647ebfc228de6d61db42))
+* **github-release:** Bump release dependencies ([3038db6](https://github.com/lexo-ch/webp-converter/commit/3038db6e1a84f1abb65d2737378a1090ef95a2a3))
+
 ## [1.1.5](https://github.com/lexo-ch/webp-converter/compare/v1.1.4...v1.1.5) (2023-11-07)
 
 
