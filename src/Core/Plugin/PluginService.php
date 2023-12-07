@@ -68,7 +68,7 @@ class PluginService extends Singleton
         if (!extension_loaded('gd') || !function_exists('gd_info')) {
             $this->notices->add(
                 $this->notice->message(
-                    __('The GD PHP extension is required for the WebP Converter plugin to work.', 'webpc')
+                    __('The GD PHP extension is required for the LEXO WebP Converter plugin to work.', 'webpc')
                 )
                 ->type('error')
             );
@@ -266,8 +266,8 @@ class PluginService extends Singleton
     {
         add_submenu_page(
             self::getSettingsPageParentSlug(),
-            __('WebP Converter', 'webpc'),
-            __('WebP Converter', 'webpc'),
+            __('LEXO WebP Converter', 'webpc'),
+            __('LEXO WebP Converter', 'webpc'),
             self::getManagePluginCap(),
             self::SETTINGS_PAGE_SLUG,
             [$this->settingsPage, 'getSettingsPageContent']

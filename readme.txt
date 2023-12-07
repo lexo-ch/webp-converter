@@ -1,4 +1,4 @@
-=== WebP Converter ===
+=== LEXO WebP Converter ===
 Contributors: mpuzovic
 Donate link: https://www.lexo.ch
 Tags: plugin, converter, webp, jpg, jpeg, png

@@ -65,7 +65,7 @@ class Converter
                 $file['type'] = 'image/webp';
             }
         } catch (Exception $e) {
-            error_log('WebP Converter: Failed to convert image to WebP format - ' . $e->getMessage());
+            error_log('LEXO WebP Converter: Failed to convert image to WebP format - ' . $e->getMessage());
         }
 
         return $file;

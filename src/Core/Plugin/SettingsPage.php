@@ -12,7 +12,7 @@ class SettingsPage
     {
         \ob_start(); ?>
             <div id="webp-converter-settings" class="wrap">
-                <h1><?php _e('WebP Converter', 'webpc'); ?></h1>
+                <h1><?php _e('LEXO WebP Converter', 'webpc'); ?></h1>
 
                 <h2><?php _e('Compression quality settings', 'webpc'); ?></h2>
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Plugin Name:       WebP Converter
+ * Plugin Name:       LEXO WebP Converter
  * Plugin URI:        https://github.com/lexo-ch/webp-converter/
  * Description:       Automatically converts images to WebP format upon upload.
  * Version:           1.1.5
@@ -92,7 +92,7 @@ use LEXO\WebPC\Core\Bootloader;
     && define('LEXO\WebPC\UPDATE_PATH', 'https://wprepo.lexo.ch/public/webp-converter/info.json');
 
 if (!file_exists($composer = PATH . '/vendor/autoload.php')) {
-    wp_die('Error locating autoloader in WebP Converter.
+    wp_die('Error locating autoloader in LEXO WebP Converter.
         Please run a following command:<pre>composer install</pre>', 'webpc');
 }
 

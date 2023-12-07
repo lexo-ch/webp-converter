@@ -1,4 +1,4 @@
-# WebP Converter
+# LEXO WebP Converter
 Automatically converts images to WebP format upon upload.
 
 ---
@@ -14,7 +14,7 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 ## Installation
 1. Go to the [latest release](https://github.com/lexo-ch/webp-converter/releases/latest/).
 2. Under Assets, click on the link named `Version x.y.z`. It's a compiled build.
-3. Extract zip file and copy the folder into your `wp-content/plugins` folder and activate WebP Converter in plugins admin page. Alternatively, you can use downloaded zip file to install it directly from your plugin admin page.
+3. Extract zip file and copy the folder into your `wp-content/plugins` folder and activate LEXO WebP Converter in plugins admin page. Alternatively, you can use downloaded zip file to install it directly from your plugin admin page.
 
 ---
 ## Filters
@@ -46,10 +46,10 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 ---
 ## Actions
 #### - `webpc/init`
-- Fires on WebP Converter init.
+- Fires on LEXO WebP Converter init.
 
 #### - `webpc/localize/admin-webpc.js`
-- Fires right before WebP Converter admin script has been enqueued.
+- Fires right before LEXO WebP Converter admin script has been enqueued.
 
 ---
 ## Changelog

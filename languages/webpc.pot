@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: WebP Converter\n"
+"Project-Id-Version: LEXO WebP Converter\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-25 15:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
@@ -87,7 +87,7 @@ msgid "Settings"
 msgstr ""
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:71
-msgid "The GD PHP extension is required for the WebP Converter plugin to work."
+msgid "The GD PHP extension is required for the LEXO WebP Converter plugin to work."
 msgstr ""
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:102
@@ -103,5 +103,5 @@ msgstr ""
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:15
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:269
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:270
-msgid "WebP Converter"
+msgid "LEXO WebP Converter"
 msgstr ""
