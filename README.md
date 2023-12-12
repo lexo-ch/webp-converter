@@ -26,7 +26,7 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 #### - `webpc/enqueue/admin-webpc.js`
 *Parameters*
 `apply_filters('webpc/enqueue/admin-webpc.js', $args);`
-- $args (bool) Printing of the file `admin-webpc.js` (stylesheet id is `webpc/admin-webpc.js-js`). It also affects printing of the localized `webpcAdminLocalized` variable.
+- $args (bool) Printing of the file `admin-webpc.js` (script id is `webpc/admin-webpc.js-js`). It also affects printing of the localized `webpcAdminLocalized` variable.
 
 #### - `webpc/enqueue/admin-webpc.css`
 *Parameters*
