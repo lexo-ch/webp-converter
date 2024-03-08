@@ -359,6 +359,11 @@ class PluginService extends Singleton
         return max((int) get_option('large_size_w'), self::INIT_SCALE_SIZE);
     }
 
+    public static function getMaxScaleSize()
+    {
+        return get_option('large_size_w') < 5000 ? 5000 : get_option('large_size_w');
+    }
+
     public static function allowedImageTypes(): array
     {
         return [
@@ -384,7 +389,7 @@ class PluginService extends Singleton
             ],
             'scale-original-to' => [
                 'min' => self::getInitialScaleSize(),
-                'max' => 5000
+                'max' => self::getMaxScaleSize()
             ]
         ];
 
