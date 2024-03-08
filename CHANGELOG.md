@@ -1,3 +1,12 @@
+## [1.2.1](https://github.com/lexo-ch/webp-converter/compare/v1.2.0...v1.2.1) (2024-03-08)
+
+
+### Bug Fixes
+
+* **core:** Refactor MAX value ([c86ffcc](https://github.com/lexo-ch/webp-converter/commit/c86ffcc452339a67aceccf0d0f462260a3fea5ba))
+* **core:** Show error if "large" > scale value ([ebbbde1](https://github.com/lexo-ch/webp-converter/commit/ebbbde1e8b8e39a7354f8e1b31ec85f59a314007))
+* **core:** Sync new (missing) fields after update ([93dc625](https://github.com/lexo-ch/webp-converter/commit/93dc625b3e21b7c70e371406f5ca7cef42eed0ad))
+
 # [1.2.0](https://github.com/lexo-ch/webp-converter/compare/v1.1.6...v1.2.0) (2024-03-08)
 
 
