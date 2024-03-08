@@ -289,6 +289,42 @@ class PluginService extends Singleton
         ];
     }
 
+    private static function mergeSettingsAndUpdateOption($currentSettings, $defaultSettings)
+    {
+        // Flag to track if there are any changes
+        $isChanged = false;
+
+        foreach ($defaultSettings as $key => $value) {
+            if (!isset($currentSettings[$key])) {
+                $currentSettings[$key] = $value;
+                $isChanged = true; // Mark as changed
+            } elseif (is_array($value)) {
+                // Recursively merge sub-arrays and check for changes
+                list($mergedSubArray, $subArrayChanged) = self::mergeSettingsAndUpdateOption($currentSettings[$key], $value);
+                $currentSettings[$key] = $mergedSubArray;
+                if ($subArrayChanged) {
+                    $isChanged = true; // Propagate change flag
+                }
+            }
+        }
+
+        if ($isChanged) {
+            // Update the WordPress option only if there are changes
+            update_option(FIELD_NAME, $currentSettings);
+        }
+
+        // Return the merged settings and the change flag
+        return array($currentSettings, $isChanged);
+    }
+
+    public function updateMissingSettings()
+    {
+        self::mergeSettingsAndUpdateOption(
+            get_option(FIELD_NAME),
+            self::getInitSettings()
+        );
+    }
+
     public static function getPluginSettings()
     {
         return wp_parse_args(get_option(FIELD_NAME, []), self::getInitSettings());

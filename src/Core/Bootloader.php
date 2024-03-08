@@ -30,6 +30,7 @@ class Bootloader extends Singleton
     public function onAdminInit()
     {
         $plugin_settings = PluginService::getInstance();
+        $plugin_settings->updateMissingSettings();
         $plugin_settings->hanldleSaveSettings();
         $plugin_settings->checkForGD();
     }
