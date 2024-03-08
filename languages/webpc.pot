@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LEXO WebP Converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-25 15:49+0000\n"
+"POT-Creation-Date: 2024-03-08 10:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,24 +16,10 @@ msgstr ""
 "X-Loco-Version: 2.6.4; wp-6.2.2\n"
 "X-Domain: webpc"
 
-#: ../../../../../../../Documents/GitHub/webp-converter/webp-converter.php:126
-#, php-format
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:340
 msgid ""
-"%s requires PHP %s or greater.<br/>\n"
-"                    Go back to <a href=\"%s\">Dashboard</a>"
-msgstr ""
-
-#: ../../../../../../../Documents/GitHub/webp-converter/webp-converter.php:138
-#, php-format
-msgid ""
-"%s requires WordPress %s or greater.<br/>\n"
-"                    Go back to <a href=\"%s\">Dashboard</a>"
-msgstr ""
-
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:315
-msgid ""
-"(Applies to WebP image created from uploaded JPG/JPEG image. Allowed values "
-"50-100%)"
+"Applies to WebP image created from uploaded JPG/JPEG image. Acceptable "
+"values range from %d to %d."
 msgstr ""
 
 #. Description of the plugin
@@ -52,7 +38,11 @@ msgstr ""
 msgid "https://www.lexo.ch"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:320
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:338
+msgid "Image compression in percentages."
+msgstr ""
+
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:348
 msgid "Keep smaller image (WebP or original, whatever is smaller)"
 msgstr ""
 
@@ -60,48 +50,64 @@ msgstr ""
 msgid "LEXO GmbH"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:88
+#. Name of the plugin
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:15
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:271
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:272
+msgid "LEXO WebP Converter"
+msgstr ""
+
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:96
 msgid "Manually check for update"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:81
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:89
 #, php-format
 msgid "Next automatic update check at <b>%s</b>."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:210
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:212
 #, php-format
 msgid "Plugin %s is up to date."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:69
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:77
 msgid "Save settings"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:201
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:356
+msgid "Scale down uploaded images."
+msgstr ""
+
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:203
 msgid "Security check failed."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:176
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:178
 msgid "Settings"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:71
-msgid "The GD PHP extension is required for the LEXO WebP Converter plugin to work."
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:72
+msgid ""
+"The GD PHP extension is required for the LEXO WebP Converter plugin to work."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:102
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:104
 #, php-format
 msgid "The settings for the %s have been successfully saved."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:82
-msgid "This user doesn't have persmission to run this plugin."
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:358
+#, php-format
+msgid ""
+"This setting affects all uploaded images, no matter what type they are. If "
+"an image is wider or taller than the limit we set, it will automatically be "
+"scaled down to fit within this limit. The starting point for this limit is "
+"the larger of two values: <a href=\"%s\">the width set for \"large\" image "
+"size</a>, or %d. You can choose any value within the range of %d (the larger "
+"of the \"large\" image size width or %d) to %d."
 msgstr ""
 
-#. Name of the plugin
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:15
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:269
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:270
-msgid "LEXO WebP Converter"
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:83
+msgid "This user doesn't have persmission to run this plugin."
 msgstr ""

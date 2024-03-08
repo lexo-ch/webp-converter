@@ -16,11 +16,20 @@
 #webp-converter-setting-settings-wrapper {
   display: inline-flex;
   flex-direction: column;
-  gap: 20px;
 
   .row {
+    border-bottom: 1px solid #d3d3d3;
+    padding: 15px 5px;
+
     label {
       display: inline;
     }
+  }
+
+  .webp-field-escription {
+      display: block;
+      margin-top: 4px;
+      font-style: italic;
+      color: #868686;
   }
 }
