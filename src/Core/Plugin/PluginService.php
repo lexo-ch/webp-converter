@@ -33,6 +33,7 @@ class PluginService extends Singleton
     private const SETTINGS_PARENT_SLUG  = 'options-general.php';
     private const SETTINGS_PAGE_SLUG    = 'settings-' . PLUGIN_SLUG;
     private bool $can_manage_plugin     = false;
+    public const INIT_SCALE_SIZE        = 1920;
 
     private $settingsPage;
 
@@ -93,6 +94,7 @@ class PluginService extends Singleton
         }
 
         $settings['keep-smaller'] = sanitize_text_field($_POST['keep-smaller']);
+        $settings['scale-original-to'] = sanitize_text_field($_POST['scale-original-to']);
 
         update_option(FIELD_NAME, $settings);
 
@@ -282,7 +284,8 @@ class PluginService extends Singleton
                     'compression' => 85
                 ]
             ],
-            'keep-smaller' => 'on'
+            'keep-smaller' => 'on',
+            'scale-original-to' => self::getInitialScaleSize()
         ];
     }
 
@@ -291,12 +294,18 @@ class PluginService extends Singleton
         return wp_parse_args(get_option(FIELD_NAME, []), self::getInitSettings());
     }
 
+    public static function getInitialScaleSize(): int
+    {
+        return max((int) get_option('large_size_w'), self::INIT_SCALE_SIZE);
+    }
+
     public static function allowedImageTypes(): array
     {
         return [
             'jpeg',
             'jpg',
-            'png'
+            'png',
+            'webp'
         ];
     }
 
@@ -308,20 +317,52 @@ class PluginService extends Singleton
             return [];
         }
 
+        $vars = [
+            'jpg' => [
+                'min' => 50,
+                'max' => 100
+            ],
+            'scale-original-to' => [
+                'min' => self::getInitialScaleSize(),
+                'max' => 5000
+            ]
+        ];
+
         return [
             'jpg' => [
                 'type'          => 'number',
-                'min'           => 50,
-                'max'           => 100,
+                'min'           => $vars['jpg']['min'],
+                'max'           => $vars['jpg']['max'],
                 'step'          => 1,
                 'value'         => $settings['types']['jpg']['compression'],
-                'translation'   => __('(Applies to WebP image created from uploaded JPG/JPEG image. Allowed values 50-100%)', 'webpc')
+                'label'         => __('Image compression in percentages.', 'webpc'),
+                'description'   => sprintf(
+                    __('Applies to WebP image created from uploaded JPG/JPEG image. Acceptable values range from %d to %d.', 'webpc'),
+                    $vars['jpg']['min'],
+                    $vars['jpg']['max']
+                )
             ],
             'keep-smaller' => [
                 'type'          => 'checkbox',
                 'value'         => $settings['keep-smaller'] ?? '',
-                'translation'   => __('Keep smaller image (WebP or original, whatever is smaller)', 'webpc')
-            ]
+                'label'   => __('Keep smaller image (WebP or original, whatever is smaller)', 'webpc')
+            ],
+            'scale-original-to' => [
+                'type'          => 'number',
+                'min'           => $vars['scale-original-to']['min'],
+                'max'           => $vars['scale-original-to']['max'],
+                'step'          => 1,
+                'value'         => $settings['scale-original-to'],
+                'label'         => __('Scale down uploaded images.', 'webpc'),
+                'description'   => sprintf(
+                    __('This setting affects all uploaded images, no matter what type they are. If an image is wider or taller than the limit we set, it will automatically be scaled down to fit within this limit. The starting point for this limit is the larger of two values: <a href="%s">the width set for "large" image size</a>, or %d. You can choose any value within the range of %d (the larger of the "large" image size width or %d) to %d.', 'webpc'),
+                    admin_url('options-media.php'),
+                    self::INIT_SCALE_SIZE,
+                    $vars['scale-original-to']['min'],
+                    self::INIT_SCALE_SIZE,
+                    $vars['scale-original-to']['max']
+                )
+            ],
         ];
     }
 

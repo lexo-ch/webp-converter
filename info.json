@@ -7,7 +7,7 @@
     "version": "1.1.6",
     "download_url": "https://github.com/lexo-ch/webp-converter/releases/download/v1.1.6/webp-converter-1.1.6.zip",
     "requires": "4.7",
-    "tested": "6.4.0",
+    "tested": "6.4.3",
     "requires_php": "7.4.1",
     "sections": {
         "description": "Automatically converts images to WebP format upon upload.<br><a href='https://github.com/lexo-ch/webp-converter/' target='_blank'>More about plugin</a>",

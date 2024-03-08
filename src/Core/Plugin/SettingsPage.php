@@ -42,7 +42,7 @@ class SettingsPage
                                                 max="<?php echo esc_attr($options['max']); ?>"
                                                 step="<?php echo esc_attr($options['step']); ?>"
                                             />
-                                            <?php echo in_array($type, ['jpg']) ? '%' : '';
+                                            <?php
                                             break;
 
                                         case 'checkbox':
@@ -56,9 +56,17 @@ class SettingsPage
                                             <?php
                                             break;
                                     } ?>
-
-                                    <?php echo $options['translation']; ?>
+                                    <?php if (isset($options['label']) && !empty($options['label'])) { ?>
+                                        <span class="webp-field-label">
+                                            <?php echo $options['label']; ?>
+                                        </span>
+                                    <?php } ?>
                                 </label>
+                                <?php if (isset($options['description']) && !empty($options['description'])) { ?>
+                                    <span class="webp-field-escription">
+                                        <?php echo $options['description']; ?>
+                                    </span>
+                                <?php } ?>
                             </div>
                         <?php } ?>
                     </div>
