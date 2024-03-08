@@ -14,6 +14,7 @@ class Notices
         ],
         'em'     => [],
         'strong' => [],
+        'b'      => [],
         'br'     => [],
     ];
 

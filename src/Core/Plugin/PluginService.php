@@ -77,6 +77,30 @@ class PluginService extends Singleton
         }
     }
 
+    public function compareWithLargeImageSize()
+    {
+        $large_width = (int) get_option('large_size_w');
+        $scaling_value = (int) self::getPluginSettings()['scale-original-to'];
+
+        if ($large_width > $scaling_value) {
+            $this->notices->add(
+                $this->notice->message(
+                    sprintf(
+                        __('The value of the <a href="%s">"large" image size width</a> (<b>%d</b>) is larger than the <a href="%s">value used for scaling</a> (<b>%d</b>) in %s plugin. This could lead to potential issues.', 'webpc'),
+                        admin_url('options-media.php'),
+                        $large_width,
+                        self::getOptionsLink(),
+                        $scaling_value,
+                        PLUGIN_NAME
+                    )
+                )
+                ->dismissible(false)
+                ->type('error')
+            );
+            return;
+        }
+    }
+
     public function saveSettings()
     {
         if (!current_user_can(self::getManagePluginCap())) {

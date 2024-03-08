@@ -33,6 +33,7 @@ class Bootloader extends Singleton
         $plugin_settings->updateMissingSettings();
         $plugin_settings->hanldleSaveSettings();
         $plugin_settings->checkForGD();
+        $plugin_settings->compareWithLargeImageSize();
     }
 
     public function onInit()

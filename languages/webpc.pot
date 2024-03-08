@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LEXO WebP Converter\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-08 10:27+0000\n"
+"POT-Creation-Date: 2024-03-08 13:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,7 +16,7 @@ msgstr ""
 "X-Loco-Version: 2.6.4; wp-6.2.2\n"
 "X-Domain: webpc"
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:340
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:405
 msgid ""
 "Applies to WebP image created from uploaded JPG/JPEG image. Acceptable "
 "values range from %d to %d."
@@ -38,11 +38,11 @@ msgstr ""
 msgid "https://www.lexo.ch"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:338
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:403
 msgid "Image compression in percentages."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:348
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:413
 msgid "Keep smaller image (WebP or original, whatever is smaller)"
 msgstr ""
 
@@ -52,8 +52,8 @@ msgstr ""
 
 #. Name of the plugin
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:15
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:271
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:272
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:295
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:296
 msgid "LEXO WebP Converter"
 msgstr ""
 
@@ -66,7 +66,7 @@ msgstr ""
 msgid "Next automatic update check at <b>%s</b>."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:212
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:236
 #, php-format
 msgid "Plugin %s is up to date."
 msgstr ""
@@ -75,15 +75,15 @@ msgstr ""
 msgid "Save settings"
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:356
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:421
 msgid "Scale down uploaded images."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:203
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:227
 msgid "Security check failed."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:178
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:202
 msgid "Settings"
 msgstr ""
 
@@ -92,12 +92,20 @@ msgid ""
 "The GD PHP extension is required for the LEXO WebP Converter plugin to work."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:104
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:128
 #, php-format
 msgid "The settings for the %s have been successfully saved."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:358
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:89
+#, php-format
+msgid ""
+"The value of the <a href=\"%s\">\"large\" image size width</a> (<b>%d</b>) "
+"is larger than the <a href=\"%s\">value used for scaling</a> (<b>%d</b>) in "
+"%s plugin. This could lead to potential issues."
+msgstr ""
+
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:423
 #, php-format
 msgid ""
 "This setting affects all uploaded images, no matter what type they are. If "
@@ -108,6 +116,6 @@ msgid ""
 "of the \"large\" image size width or %d) to %d."
 msgstr ""
 
-#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:83
+#: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:107
 msgid "This user doesn't have persmission to run this plugin."
 msgstr ""
