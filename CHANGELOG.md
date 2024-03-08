@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/lexo-ch/webp-converter/compare/v1.1.6...v1.2.0) (2024-03-08)
+
+
+### Bug Fixes
+
+* **core:** Fix deps ([4c8bbec](https://github.com/lexo-ch/webp-converter/commit/4c8bbecc338b320d358fb56337836293412d67ba))
+
+
+### Features
+
+* **core:** Maybe scale down uploaded images automatically ([305357d](https://github.com/lexo-ch/webp-converter/commit/305357d1e03c25a53815ba0f423ab0787c0d33d5))
+
 ## [1.1.6](https://github.com/lexo-ch/webp-converter/compare/v1.1.5...v1.1.6) (2023-12-7)
 
 

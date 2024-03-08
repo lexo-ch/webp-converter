@@ -1,7 +1,7 @@
 {
     "name": "lexo/webp-converter",
     "description": "Automatically converts images to WebP format upon upload.",
-    "version": "1.1.6",
+    "version": "1.2.0",
     "homepage": "https://www.lexo.ch/",
     "license": "GPL-2.0-only",
     "authors": [
