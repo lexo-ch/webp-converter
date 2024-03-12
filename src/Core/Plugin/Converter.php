@@ -21,31 +21,18 @@ class Converter
             $file_info['filename'] = wp_unique_filename($file_info['dirname'], $file_info['filename'] . '.webp');
             $webp_file_path = $file_info['dirname'] . '/' . $file_info['filename'];
 
-            list($originalWidth, $originalHeight) = getimagesize($file['file']);
-            $maxSize = $settings['scale-original-to'];
-            $resizeNeeded = $originalWidth > $maxSize || $originalHeight > $maxSize;
-
-            if ($resizeNeeded) {
-                $ratio = $originalWidth / $originalHeight;
-                if ($ratio > 1) {
-                    $newWidth = $maxSize;
-                    $newHeight = $maxSize / $ratio;
-                } else {
-                    $newHeight = $maxSize;
-                    $newWidth = $maxSize * $ratio;
-                }
-            } else {
-                $newWidth = $originalWidth;
-                $newHeight = $originalHeight;
-            }
-
             $quality = 100;
+
+            $is_image_corrected = false;
 
             switch (strtolower($file_info['extension'])) {
                 case 'jpg':
                 case 'jpeg':
                     $image = imagecreatefromjpeg($file['file']);
                     $quality = $settings['types']['jpg']['compression'];
+                    $corrected_image = self::correctImageOrientation($image, $file['file']);
+                    $is_image_corrected = $corrected_image['rotated'];
+                    $image = $corrected_image['image'];
                     break;
                 case 'png':
                     $image = imagecreatefrompng($file['file']);
@@ -64,6 +51,29 @@ class Converter
             if (in_array(strtolower($file_info['extension']), ['png', 'webp'])) {
                 imagealphablending($image, true);
                 imagesavealpha($image, true);
+            }
+
+            if ($is_image_corrected) {
+                list($originalHeight, $originalWidth) = getimagesize($file['file']);
+            } else {
+                list($originalWidth, $originalHeight) = getimagesize($file['file']);
+            }
+
+            $maxSize = $settings['scale-original-to'];
+            $resizeNeeded = $originalWidth > $maxSize || $originalHeight > $maxSize;
+
+            if ($resizeNeeded) {
+                $ratio = $originalWidth / $originalHeight;
+                if ($ratio > 1) {
+                    $newWidth = $maxSize;
+                    $newHeight = $maxSize / $ratio;
+                } else {
+                    $newHeight = $maxSize;
+                    $newWidth = $maxSize * $ratio;
+                }
+            } else {
+                $newWidth = $originalWidth;
+                $newHeight = $originalHeight;
             }
 
             if ($resizeNeeded) {
@@ -97,5 +107,42 @@ class Converter
         }
 
         return $file;
+    }
+
+    private static function correctImageOrientation($image, $filePath)
+    {
+        $rotated = false;
+
+        if (!function_exists('exif_read_data')) {
+            return [
+                'image' => $image,
+                'rotated' => $rotated
+            ];
+        }
+
+        $exif = exif_read_data($filePath);
+
+        if ($exif && isset($exif['Orientation'])) {
+            $orientation = $exif['Orientation'];
+
+            switch ($orientation) {
+                case 3:
+                    $image = imagerotate($image, 180, 0);
+                    break;
+                case 6:
+                    $image = imagerotate($image, -90, 0); // Rotate clockwise
+                    $rotated = true;
+                    break;
+                case 8:
+                    $image = imagerotate($image, 90, 0); // Rotate counter-clockwise
+                    $rotated = true;
+                    break;
+            }
+        }
+
+        return [
+            'image' => $image,
+            'rotated' => $rotated
+        ];
     }
 }
