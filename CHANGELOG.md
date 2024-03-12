@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/lexo-ch/webp-converter/compare/v1.2.1...v1.2.2) (2024-03-12)
+
+
+### Bug Fixes
+
+* **core:** Fix image orientation ([d439822](https://github.com/lexo-ch/webp-converter/commit/d439822f0756fb645d35dbcd9402beeb4ce62643))
+
 ## [1.2.1](https://github.com/lexo-ch/webp-converter/compare/v1.2.0...v1.2.1) (2024-03-08)
 
 
