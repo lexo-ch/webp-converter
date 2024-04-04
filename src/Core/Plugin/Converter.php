@@ -76,6 +76,9 @@ class Converter
                 $newHeight = $originalHeight;
             }
 
+            $newWidth = ceil($newWidth);
+            $newHeight = ceil($newHeight);
+
             if ($resizeNeeded) {
                 $resizedImage = imagecreatetruecolor($newWidth, $newHeight);
                 imagealphablending($resizedImage, false);
