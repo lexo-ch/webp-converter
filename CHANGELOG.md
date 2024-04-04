@@ -1,3 +1,11 @@
+## [1.2.3](https://github.com/lexo-ch/webp-converter/compare/v1.2.2...v1.2.3) (2024-04-04)
+
+
+### Bug Fixes
+
+* **core:** Convert float dimensions to integer ([f736f7d](https://github.com/lexo-ch/webp-converter/commit/f736f7d154434e90e08547bbfeb0e21e04ae1934))
+* **deps:** Update dependencies ([8b2c2b2](https://github.com/lexo-ch/webp-converter/commit/8b2c2b2421b82c99b49f3cf75c9d04c7fb7d1cb6))
+
 ## [1.2.2](https://github.com/lexo-ch/webp-converter/compare/v1.2.1...v1.2.2) (2024-03-12)
 
 
