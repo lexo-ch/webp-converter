@@ -18,7 +18,8 @@ use const LEXO\WebPC\{
     BASENAME,
     CACHE_KEY,
     UPDATE_PATH,
-    FIELD_NAME
+    FIELD_NAME,
+    ORIGINAL_NAME_ADDITION
 };
 
 class PluginService extends Singleton
@@ -57,6 +58,26 @@ class PluginService extends Singleton
         $this->settingsPage = new SettingsPage();
 
         add_action('admin_post_' . self::CHECK_UPDATE, [$this, 'checkForUpdateManually']);
+    }
+
+    public function handleDeleteAttachment($post_id)
+    {
+        $file_path = get_attached_file($post_id);
+
+        if (file_exists($file_path)) {
+            if (pathinfo($file_path, PATHINFO_EXTENSION) === 'webp') {
+                $base_path = pathinfo($file_path, PATHINFO_DIRNAME);
+                $file_name_without_extension = pathinfo($file_path, PATHINFO_FILENAME);
+
+                foreach (self::allowedImageTypes() as $ext) {
+                    $alternative_file_path = $base_path . DIRECTORY_SEPARATOR . $file_name_without_extension .  ORIGINAL_NAME_ADDITION . '.' . $ext;
+
+                    if (file_exists($alternative_file_path)) {
+                        unlink($alternative_file_path);
+                    }
+                }
+            }
+        }
     }
 
     public function hanldleSaveSettings()
@@ -119,6 +140,7 @@ class PluginService extends Singleton
 
         $settings['keep-smaller'] = sanitize_text_field($_POST['keep-smaller']);
         $settings['scale-original-to'] = sanitize_text_field($_POST['scale-original-to']);
+        $settings['preserve-original'] = \sanitize_text_field($_POST['preserve-original']);
 
         update_option(FIELD_NAME, $settings);
 
@@ -427,6 +449,12 @@ class PluginService extends Singleton
                     self::INIT_SCALE_SIZE,
                     $vars['scale-original-to']['max']
                 )
+            ],
+            'preserve-original' => [
+                'type'          => 'checkbox',
+                'value'         => $settings['preserve-original'] ?? '',
+                'label'   => __('Backup original image without scaling or compression', 'webpc'),
+                'description' => __('Backups won\'t be created in cases when original image is WebP or option "Keep smaller image" is enabled and original image is smaller than converted WebP (and therefore we keep original instead of WebP).', 'webpc')
             ],
         ];
     }

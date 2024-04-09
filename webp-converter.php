@@ -97,6 +97,9 @@ use LEXO\WebPC\Core\Bootloader;
 !defined('LEXO\WebPC\UPDATE_PATH')
     && define('LEXO\WebPC\UPDATE_PATH', 'https://wprepo.lexo.ch/public/webp-converter/info.json');
 
+!defined('LEXO\WebPC\ORIGINAL_NAME_ADDITION')
+    && define('LEXO\WebPC\ORIGINAL_NAME_ADDITION', '---webpc-original---');
+
 if (!file_exists($composer = PATH . '/vendor/autoload.php')) {
     wp_die('Error locating autoloader in LEXO WebP Converter.
         Please run a following command:<pre>composer install</pre>', 'webpc');

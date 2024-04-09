@@ -25,6 +25,13 @@ class Bootloader extends Singleton
         add_action('admin_menu', [$this, 'onAdminMenu'], 100);
         add_action('admin_init', [$this, 'onAdminInit'], 10);
         add_filter('wp_handle_upload', [$this, 'wpHandleUpload']);
+        add_action('delete_attachment', [$this, 'onDeleteAttachment']);
+    }
+
+    public function onDeleteAttachment($file_id)
+    {
+        $plugin_settings = PluginService::getInstance();
+        $plugin_settings->handleDeleteAttachment($file_id);
     }
 
     public function onAdminInit()
