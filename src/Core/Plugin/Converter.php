@@ -4,6 +4,10 @@ namespace LEXO\WebPC\Core\Plugin;
 
 use Exception;
 
+use const LEXO\WebPC\{
+    ORIGINAL_NAME_ADDITION
+};
+
 class Converter
 {
     public function run($file)
@@ -99,6 +103,10 @@ class Converter
                 || filesize($file['file']) > strlen($webpData)
             ) {
                 file_put_contents($webp_file_path, $webpData);
+
+                if ($settings['preserve-original'] === 'on') {
+                    copy($file['file'], explode('.webp', $webp_file_path)[0] . ORIGINAL_NAME_ADDITION . '.' . strtolower($file_info['extension']));
+                }
 
                 unlink($file['file']);
 
