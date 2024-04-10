@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/lexo-ch/webp-converter/compare/v1.3.0...v1.3.1) (2024-04-10)
+
+
+### Bug Fixes
+
+* **core:** Fix warning ([103755e](https://github.com/lexo-ch/webp-converter/commit/103755e200da0d87bb2e0c94d7242e96aa851c34))
+
 # [1.3.0](https://github.com/lexo-ch/webp-converter/compare/v1.2.3...v1.3.0) (2024-04-09)
 
 
