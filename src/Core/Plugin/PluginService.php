@@ -239,7 +239,7 @@ class PluginService extends Singleton
             ->setVersion(VERSION)
             ->setRemotePath(UPDATE_PATH)
             ->setCacheKey(CACHE_KEY)
-            ->setCacheExpiration(12 * HOUR_IN_SECONDS)
+            ->setCacheExpiration(HOUR_IN_SECONDS)
             ->setCache(true);
     }
 
