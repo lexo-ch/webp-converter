@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/lexo-ch/webp-converter/compare/v1.3.1...v1.3.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* **core:** Check for update every hour ([9219a79](https://github.com/lexo-ch/webp-converter/commit/9219a797185965b238d6c06428f3b4958f6627b3))
+
 ## [1.3.1](https://github.com/lexo-ch/webp-converter/compare/v1.3.0...v1.3.1) (2024-04-10)
 
 
