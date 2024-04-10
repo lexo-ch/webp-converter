@@ -104,7 +104,7 @@ class Converter
             ) {
                 file_put_contents($webp_file_path, $webpData);
 
-                if ($settings['preserve-original'] === 'on') {
+                if (isset($settings['preserve-original']) && $settings['preserve-original'] === 'on') {
                     copy($file['file'], explode('.webp', $webp_file_path)[0] . ORIGINAL_NAME_ADDITION . '.' . strtolower($file_info['extension']));
                 }
 
