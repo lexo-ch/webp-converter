@@ -150,10 +150,6 @@ class PluginService extends Singleton
             }
         }
 
-        $settings['keep-smaller'] = sanitize_text_field($_POST['keep-smaller']);
-        $settings['scale-original-to'] = sanitize_text_field($_POST['scale-original-to']);
-        $settings['preserve-original'] = sanitize_text_field($_POST['preserve-original']);
-
         update_option(FIELD_NAME, $settings);
 
         set_transient(
