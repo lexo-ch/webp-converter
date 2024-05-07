@@ -138,9 +138,21 @@ class PluginService extends Singleton
             }
         }
 
+        foreach (
+            [
+                'keep-smaller',
+                'scale-original-to',
+                'preserve-original'
+            ] as $field_name
+        ) {
+            if (isset($_POST[$field_name])) {
+                $settings[$field_name] = sanitize_text_field($_POST[$field_name]);
+            }
+        }
+
         $settings['keep-smaller'] = sanitize_text_field($_POST['keep-smaller']);
         $settings['scale-original-to'] = sanitize_text_field($_POST['scale-original-to']);
-        $settings['preserve-original'] = \sanitize_text_field($_POST['preserve-original']);
+        $settings['preserve-original'] = sanitize_text_field($_POST['preserve-original']);
 
         update_option(FIELD_NAME, $settings);
 
