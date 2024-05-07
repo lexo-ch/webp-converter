@@ -1,3 +1,10 @@
+## [1.3.3](https://github.com/lexo-ch/webp-converter/compare/v1.3.2...v1.3.3) (2024-05-07)
+
+
+### Bug Fixes
+
+* **core:** Fix undefined array key warnings ([6125eee](https://github.com/lexo-ch/webp-converter/commit/6125eee1897d059faddd1838ac859d9ec464ab1d))
+
 ## [1.3.2](https://github.com/lexo-ch/webp-converter/compare/v1.3.1...v1.3.2) (2024-04-10)
 
 
