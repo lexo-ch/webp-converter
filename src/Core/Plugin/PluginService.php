@@ -145,9 +145,9 @@ class PluginService extends Singleton
                 'preserve-original'
             ] as $field_name
         ) {
-            if (isset($_POST[$field_name])) {
-                $settings[$field_name] = sanitize_text_field($_POST[$field_name]);
-            }
+            $settings[$field_name] = isset($_POST[$field_name])
+                ? sanitize_text_field($_POST[$field_name])
+                : '';
         }
 
         update_option(FIELD_NAME, $settings);
