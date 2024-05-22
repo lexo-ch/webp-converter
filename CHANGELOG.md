@@ -1,3 +1,10 @@
+## [1.3.5](https://github.com/lexo-ch/webp-converter/compare/v1.3.4...v1.3.5) (2024-05-22)
+
+
+### Bug Fixes
+
+* **core:** Fix bug where checkboxes were unable to be unchecked ([3618491](https://github.com/lexo-ch/webp-converter/commit/361849134833a30c8262e8e87fa917dce95fda44))
+
 ## [1.3.4](https://github.com/lexo-ch/webp-converter/compare/v1.3.3...v1.3.4) (2024-05-07)
 
 
