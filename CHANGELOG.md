@@ -1,3 +1,11 @@
+## [1.3.6](https://github.com/lexo-ch/webp-converter/compare/v1.3.5...v1.3.6) (2024-08-27)
+
+
+### Bug Fixes
+
+* **core:** Suppress the errors in exif_read_data ([f471159](https://github.com/lexo-ch/webp-converter/commit/f471159b14f5f30799b86b9f12ef2349430c94e9))
+* **deps:** Update dependencies ([43b7cad](https://github.com/lexo-ch/webp-converter/commit/43b7cad3e68e28cc4461221656098eae138a7677))
+
 ## [1.3.5](https://github.com/lexo-ch/webp-converter/compare/v1.3.4...v1.3.5) (2024-05-22)
 
 
