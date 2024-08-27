@@ -131,7 +131,7 @@ class Converter
             ];
         }
 
-        $exif = exif_read_data($filePath);
+        $exif = @exif_read_data($filePath);
 
         if ($exif && isset($exif['Orientation'])) {
             $orientation = $exif['Orientation'];
