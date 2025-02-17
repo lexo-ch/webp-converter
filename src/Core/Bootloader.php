@@ -41,6 +41,8 @@ class Bootloader extends Singleton
         $plugin_settings->hanldleSaveSettings();
         $plugin_settings->checkForGD();
         $plugin_settings->compareWithLargeImageSize();
+        $plugin_settings->addTemporaryDisableNotice();
+        $plugin_settings->addNegativePeriodNotice();
     }
 
     public function onInit()

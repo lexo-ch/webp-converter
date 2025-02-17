@@ -37,4 +37,17 @@ trait Helpers
     {
         return "<pre>" . \print_r($data, true) . "</pre>";
     }
+
+    public static function convertSecondsToHoursAndMinutes(int $seconds): string
+    {
+        $minutes = floor($seconds / 60);
+        $hours = floor($minutes / 60);
+        $remaining_minutes = $minutes % 60;
+
+        if ($hours > 0) {
+            return $remaining_minutes === 0 ? sprintf('%dh', $hours) : sprintf('%dh %dmin', $hours, $remaining_minutes);
+        }
+
+        return sprintf('%dmin', $remaining_minutes);
+    }
 }

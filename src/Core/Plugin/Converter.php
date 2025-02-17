@@ -12,6 +12,10 @@ class Converter
 {
     public function run($file)
     {
+        if (PluginService::isTemporarilyDisabled()) {
+            return $file;
+        }
+
         $file_info = pathinfo($file['file']);
 
         if (!in_array(strtolower($file_info['extension']), PluginService::allowedImageTypes())) {

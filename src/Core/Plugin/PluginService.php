@@ -31,12 +31,15 @@ class PluginService extends Singleton
 
     private const CHECK_UPDATE          = 'check-update-' . PLUGIN_SLUG;
     private const MANAGE_PLUGIN_CAP     = 'administrator';
+    private const MANAGE_DASH_WIDGET    = 'edit_posts';
     private const SETTINGS_PARENT_SLUG  = 'options-general.php';
     private const SETTINGS_PAGE_SLUG    = 'settings-' . PLUGIN_SLUG;
     private bool $can_manage_plugin     = false;
     public const INIT_SCALE_SIZE        = 1920;
 
     private $settingsPage;
+
+    private static $negative_disable_period_entered = false;
 
     public function setNamespace(string $namespace)
     {
@@ -58,6 +61,8 @@ class PluginService extends Singleton
         $this->settingsPage = new SettingsPage();
 
         add_action('admin_post_' . self::CHECK_UPDATE, [$this, 'checkForUpdateManually']);
+        add_action('wp_dashboard_setup', [$this, 'addDashboardWidget']);
+        add_action('admin_post_toggle_webp_converter', [$this, 'handleToggleWebPConverter']);
     }
 
     public function handleDeleteAttachment($post_id)
@@ -125,7 +130,7 @@ class PluginService extends Singleton
     public function saveSettings()
     {
         if (!current_user_can(self::getManagePluginCap())) {
-            wp_die(__('This user doesn\'t have persmission to run this plugin.', 'webpc'));
+            wp_die(__('This user doesn\'t have permission to run this plugin.', 'webpc'));
         }
 
         check_admin_referer(FIELD_NAME);
@@ -173,6 +178,58 @@ class PluginService extends Singleton
         $capability = apply_filters(self::$namespace . '/options-page/capability', $capability);
 
         return $capability;
+    }
+
+    public static function getManageDashWidgetCap()
+    {
+        $capability = self::MANAGE_DASH_WIDGET;
+
+        $filtered_capability = apply_filters(self::$namespace . '/dashboard-widget/capability', $capability);
+
+        return $filtered_capability;
+    }
+
+    public static function getDisableMsgDateFormat(): string
+    {
+        $date_format = 'd.m.Y H:i:s';
+        return apply_filters(self::$namespace . '/dashboard-widget/date-format', $date_format);
+    }
+
+    public static function getTemporaryDisablePeriod(): int
+    {
+        $period = 60; // minutes
+
+        $filtered_period = apply_filters(self::$namespace . '/temporary-disable-period', $period);
+
+        if ($filtered_period < 0) {
+            self::$negative_disable_period_entered = true;
+            return 3600; // Default to 1 hour in seconds
+        }
+
+        return $filtered_period * 60; // Convert minutes to seconds
+    }
+
+    public function addNegativePeriodNotice()
+    {
+        if (!self::$negative_disable_period_entered) {
+            return false;
+        }
+
+        if (!current_user_can(self::getManageDashWidgetCap())) {
+            return false;
+        }
+
+        if (self::isTemporarilyDisabled()) {
+            return false;
+        }
+
+        $message = sprintf(__('The temporary disable period for %s plugin cannot be negative. The default value of 1 hour will be used.', 'webpc'), PLUGIN_NAME);
+
+        $this->notices->add(
+            $this->notice->message($message)
+            ->dismissible(false)
+            ->type('warning')
+        );
     }
 
     public static function getSettingsPageParentSlug()
@@ -339,7 +396,8 @@ class PluginService extends Singleton
                 ]
             ],
             'keep-smaller' => 'on',
-            'scale-original-to' => self::getInitialScaleSize()
+            'scale-original-to' => self::getInitialScaleSize(),
+            'temporary_disable_timestamp' => 0
         ];
     }
 
@@ -478,5 +536,134 @@ class PluginService extends Singleton
                 admin_url('admin-post.php')
             )
         );
+    }
+
+    public static function isTemporarilyDisabled(): bool
+    {
+        $settings = self::getPluginSettings();
+        $timestamp = $settings['temporary_disable_timestamp'];
+
+        $disable_period = self::getTemporaryDisablePeriod();
+        $current_time = current_time('timestamp');
+
+        if ($timestamp > 0 && ($timestamp + $disable_period) > $current_time) {
+            return true;
+        }
+
+        // Reset and trigger temporary-disablement-has-ended action if time has expired
+        if ($timestamp > 0 && ($timestamp + $disable_period) <= $current_time) {
+            self::enablePlugin();
+        }
+
+        return false;
+    }
+
+    public static function getDisableMessage(): string
+    {
+        $settings = self::getPluginSettings();
+        $timestamp = $settings['temporary_disable_timestamp'];
+        $disable_period = self::getTemporaryDisablePeriod();
+        $until = $timestamp + $disable_period;
+        $date_format = self::getDisableMsgDateFormat();
+
+        return sprintf(__('The %s plugin is temporarily disabled until <strong>%s</strong>', 'webpc'), PLUGIN_NAME, date($date_format, $until));
+    }
+
+    public static function enablePlugin()
+    {
+        $settings = self::getPluginSettings();
+        $was_disabled = $settings['temporary_disable_timestamp'] > 0;
+        $settings['temporary_disable_timestamp'] = 0;
+        update_option(FIELD_NAME, $settings);
+
+        if ($was_disabled) {
+            do_action(DOMAIN . '/temporary-disablement-has-ended');
+        }
+    }
+
+    public static function disablePlugin()
+    {
+        $settings = self::getPluginSettings();
+        $settings['temporary_disable_timestamp'] = current_time('timestamp');
+        update_option(FIELD_NAME, $settings);
+        do_action(DOMAIN . '/plugin-temporarily-disabled');
+    }
+
+    public function addDashboardWidget()
+    {
+        if (!current_user_can(self::getManageDashWidgetCap())) {
+            return;
+        }
+
+        wp_add_dashboard_widget(
+            'webp_converter_dashboard_widget',
+            sprintf(
+                __('%s Control', 'webpc'),
+                PLUGIN_NAME
+            ),
+            [$this, 'renderDashboardWidget']
+        );
+    }
+
+    public function renderDashboardWidget()
+    {
+        $is_disabled = self::isTemporarilyDisabled();
+        $disable_period_message = $this->infoDisableMessage(self::getTemporaryDisablePeriod()); ?>
+
+        <div id="webp-converter-dashboard-widget">
+            <form method="post" action="admin-post.php">
+                <input type="hidden" name="action" value="toggle_webp_converter" />
+                <?php wp_nonce_field('toggle_webp_converter'); ?>
+
+                <?php if ($is_disabled) { ?>
+                    <input type="submit" name="enable_plugin" value="<?php esc_attr_e('Enable Plugin', 'webpc'); ?>" class="button-primary" />
+                    <p><?php echo self::getDisableMessage(); ?></p>
+                <?php } else { ?>
+                    <input type="submit" name="disable_plugin" value="<?php esc_attr_e('Disable Plugin', 'webpc'); ?>" class="button-primary" />
+                    <p><?php echo $disable_period_message; ?></p>
+                <?php } ?>
+            </form>
+        </div>
+        <?php
+    }
+
+    public function addTemporaryDisableNotice()
+    {
+        if (!self::isTemporarilyDisabled()) {
+            return false;
+        }
+
+        $message = self::getDisableMessage();
+
+        $this->notices->add(
+            $this->notice->message($message)
+            ->dismissible(false)
+            ->type('info')
+        );
+    }
+
+    private function infoDisableMessage(int $seconds): string
+    {
+        $time_display = self::convertSecondsToHoursAndMinutes($seconds);
+
+        return sprintf(__('The plugin will be disabled for %s. You can enable the plugin at any time before this period expires.', 'webpc'), $time_display);
+    }
+
+    public function handleToggleWebPConverter()
+    {
+        if (!current_user_can(self::getManageDashWidgetCap())) {
+            wp_die(__('This user doesn\'t have permission to run this plugin.', 'webpc'));
+        }
+
+        check_admin_referer('toggle_webp_converter');
+
+        if (isset($_POST['disable_plugin'])) {
+            self::disablePlugin();
+        } else {
+            self::enablePlugin();
+        }
+
+        wp_safe_redirect(admin_url());
+        exit;
     }
 }
