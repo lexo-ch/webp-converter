@@ -566,7 +566,7 @@ class PluginService extends Singleton
         $until = $timestamp + $disable_period;
         $date_format = self::getDisableMsgDateFormat();
 
-        return sprintf(__('The %s plugin is temporarily disabled until <strong>%s</strong>', 'webpc'), PLUGIN_NAME, date($date_format, $until));
+        return sprintf(__('The %s plugin (<strong>image optimization</strong>) is temporarily disabled until <strong>%s</strong>', 'webpc'), PLUGIN_NAME, date($date_format, $until));
     }
 
     public static function enablePlugin()
@@ -616,10 +616,10 @@ class PluginService extends Singleton
                 <?php wp_nonce_field('toggle_webp_converter'); ?>
 
                 <?php if ($is_disabled) { ?>
-                    <input type="submit" name="enable_plugin" value="<?php esc_attr_e('Enable Plugin', 'webpc'); ?>" class="button-primary" />
+                    <input type="submit" name="enable_plugin" value="<?php esc_attr_e('Enable Image Optimization', 'webpc'); ?>" class="button-primary" />
                     <p><?php echo self::getDisableMessage(); ?></p>
                 <?php } else { ?>
-                    <input type="submit" name="disable_plugin" value="<?php esc_attr_e('Disable Plugin', 'webpc'); ?>" class="button-primary" />
+                    <input type="submit" name="disable_plugin" value="<?php esc_attr_e('Disable Image Optimization', 'webpc'); ?>" class="button-primary" />
                     <p><?php echo $disable_period_message; ?></p>
                 <?php } ?>
             </form>
@@ -646,7 +646,7 @@ class PluginService extends Singleton
     {
         $time_display = self::convertSecondsToHoursAndMinutes($seconds);
 
-        return sprintf(__('The plugin will be disabled for %s. You can enable the plugin at any time before this period expires.', 'webpc'), $time_display);
+        return sprintf(__('If you disable image optimization, uploaded images will not be automatically converted and optimized for the web in WebP format for <strong>%s</strong>. The function will then be automatically reactivated. You can enable image optimization at any time before this period expires.', 'webpc'), $time_display);
     }
 
     public function handleToggleWebPConverter()
