@@ -25,6 +25,7 @@ class Bootloader extends Singleton
         add_action('admin_init', [$this, 'onAdminInit'], 10);
         add_filter('wp_handle_upload', [$this, 'wpHandleUpload']);
         add_action('delete_attachment', [$this, 'onDeleteAttachment']);
+        add_action('admin_notices', [$this, 'onAdminNotices']);
     }
 
     public function onDeleteAttachment($file_id)
@@ -57,9 +58,13 @@ class Bootloader extends Singleton
 
     public function onAdminWebpcJsLoad()
     {
+        PluginService::getInstance()->addAdminLocalizedScripts();
+    }
+
+    public function onAdminNotices()
+    {
         $plugin_settings = PluginService::getInstance();
 
-        $plugin_settings->addAdminLocalizedScripts();
         $plugin_settings->checkForGD();
         $plugin_settings->compareWithLargeImageSize();
         $plugin_settings->noUpdatesNotice();
