@@ -38,8 +38,6 @@ class Bootloader extends Singleton
         $plugin_settings = PluginService::getInstance();
         $plugin_settings->updateMissingSettings();
         $plugin_settings->hanldleSaveSettings();
-        $plugin_settings->checkForGD();
-        $plugin_settings->compareWithLargeImageSize();
     }
 
     public function onInit()
@@ -50,9 +48,6 @@ class Bootloader extends Singleton
         $plugin_settings->setNamespace(DOMAIN);
         $plugin_settings->registerNamespace();
         $plugin_settings->addSettingsLink();
-        $plugin_settings->noUpdatesNotice();
-        $plugin_settings->updateSuccessNotice();
-        $plugin_settings->addTemporaryDisableNotice();
     }
 
     public function onAdminMenu()
@@ -62,7 +57,14 @@ class Bootloader extends Singleton
 
     public function onAdminWebpcJsLoad()
     {
-        PluginService::getInstance()->addAdminLocalizedScripts();
+        $plugin_settings = PluginService::getInstance();
+
+        $plugin_settings->addAdminLocalizedScripts();
+        $plugin_settings->checkForGD();
+        $plugin_settings->compareWithLargeImageSize();
+        $plugin_settings->noUpdatesNotice();
+        $plugin_settings->updateSuccessNotice();
+        $plugin_settings->addTemporaryDisableNotice();
     }
 
     public function onAfterSetupTheme()
