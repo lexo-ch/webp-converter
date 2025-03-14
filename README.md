@@ -7,7 +7,7 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 
 ---
 ## Compatibility
-- WordPress version `>=4.7`. Tested and works fine up to `6.4.3`.
+- WordPress version `>=6.4`. Tested and works fine up to `6.7.2`.
 - PHP version `>=7.4.1`. Tested and works fine up to `8.3.0`.
 
 ---

@@ -4,7 +4,6 @@ namespace LEXO\WebPC\Core;
 
 use LEXO\WebPC\Core\Abstracts\Singleton;
 use LEXO\WebPC\Core\Plugin\PluginService;
-use LEXO\WebPC\Core\Notices\Notices;
 use LEXO\WebPC\Core\Plugin\Converter;
 
 use const LEXO\WebPC\{
@@ -41,8 +40,6 @@ class Bootloader extends Singleton
         $plugin_settings->hanldleSaveSettings();
         $plugin_settings->checkForGD();
         $plugin_settings->compareWithLargeImageSize();
-        $plugin_settings->addTemporaryDisableNotice();
-        $plugin_settings->addNegativePeriodNotice();
     }
 
     public function onInit()
@@ -55,8 +52,7 @@ class Bootloader extends Singleton
         $plugin_settings->addSettingsLink();
         $plugin_settings->noUpdatesNotice();
         $plugin_settings->updateSuccessNotice();
-
-        (new Notices())->run();
+        $plugin_settings->addTemporaryDisableNotice();
     }
 
     public function onAdminMenu()

@@ -5,7 +5,7 @@
  * Plugin URI:        https://github.com/lexo-ch/webp-converter/
  * Description:       Automatically converts images to WebP format upon upload.
  * Version:           1.3.6
- * Requires at least: 4.7
+ * Requires at least: 6.4
  * Requires PHP:      7.4.1
  * Author:            LEXO GmbH
  * Author URI:        https://www.lexo.ch

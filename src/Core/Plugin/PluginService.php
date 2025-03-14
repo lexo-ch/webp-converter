@@ -26,20 +26,20 @@ class PluginService extends Singleton
 {
     use Helpers;
 
-    private static string $namespace    = 'custom-plugin-namespace';
-    protected static $instance          = null;
+    private static string $namespace        = 'custom-plugin-namespace';
+    protected static $instance              = null;
 
-    private const CHECK_UPDATE          = 'check-update-' . PLUGIN_SLUG;
-    private const MANAGE_PLUGIN_CAP     = 'administrator';
-    private const MANAGE_DASH_WIDGET    = 'edit_posts';
-    private const SETTINGS_PARENT_SLUG  = 'options-general.php';
-    private const SETTINGS_PAGE_SLUG    = 'settings-' . PLUGIN_SLUG;
-    private bool $can_manage_plugin     = false;
-    public const INIT_SCALE_SIZE        = 1920;
+    private const CHECK_UPDATE              = 'check-update-' . PLUGIN_SLUG;
+    private const MANAGE_PLUGIN_CAP         = 'administrator';
+    private const MANAGE_DASH_WIDGET        = 'edit_posts';
+    private const SETTINGS_PARENT_SLUG      = 'options-general.php';
+    private const SETTINGS_PAGE_SLUG        = 'settings-' . PLUGIN_SLUG;
+    private bool $can_manage_plugin         = false;
+    public const INIT_SCALE_SIZE            = 1920;
+    private static int $temp_disable_period = 0;
+    public static array $plugin_settings    = [];
 
     private $settingsPage;
-
-    private static $negative_disable_period_entered = false;
 
     public function setNamespace(string $namespace)
     {
@@ -58,7 +58,11 @@ class PluginService extends Singleton
             $this->can_manage_plugin = current_user_can(self::getManagePluginCap());
         }
 
+        self::$plugin_settings = self::getPluginSettings();
+
         $this->settingsPage = new SettingsPage();
+
+        self::$temp_disable_period = self::getTemporaryDisablePeriod();
 
         add_action('admin_post_' . self::CHECK_UPDATE, [$this, 'checkForUpdateManually']);
         add_action('wp_dashboard_setup', [$this, 'addDashboardWidget']);
@@ -93,12 +97,18 @@ class PluginService extends Singleton
     public function checkForGD()
     {
         if (!extension_loaded('gd') || !function_exists('gd_info')) {
-            $this->notices->add(
-                $this->notice->message(
-                    __('The GD PHP extension is required for the LEXO WebP Converter plugin to work.', 'webpc')
-                )
-                ->type('error')
+            wp_admin_notice(
+                __('The GD PHP extension is required for the LEXO WebP Converter plugin to work.', 'webpc'),
+                [
+                    'type'        => 'error',
+                    'dismissible' => false,
+                    'attributes'  => [
+                        'data-slug'   => PLUGIN_SLUG,
+                        'data-action' => 'gd-missing'
+                    ]
+                ]
             );
+
             return;
         }
     }
@@ -106,22 +116,29 @@ class PluginService extends Singleton
     public function compareWithLargeImageSize()
     {
         $large_width = (int) get_option('large_size_w');
-        $scaling_value = (int) self::getPluginSettings()['scale-original-to'];
+        $scaling_value = (int) self::$plugin_settings['scale-original-to'];
 
         if ($large_width > $scaling_value) {
-            $this->notices->add(
-                $this->notice->message(
-                    sprintf(
-                        __('The value of the <a href="%s">"large" image size width</a> (<b>%d</b>) is larger than the <a href="%s">value used for scaling</a> (<b>%d</b>) in %s plugin. This could lead to potential issues.', 'webpc'),
-                        admin_url('options-media.php'),
-                        $large_width,
-                        self::getOptionsLink(),
-                        $scaling_value,
-                        PLUGIN_NAME
-                    )
-                )
-                ->dismissible(false)
-                ->type('error')
+            wp_admin_notice(
+                sprintf(
+                    __(
+                        'The value of the <a href="%s">"large" image size width</a> (<b>%d</b>) is larger than the <a href="%s">value used for scaling</a> (<b>%d</b>) in %s plugin. This could lead to potential issues.',
+                        'webpc'
+                    ),
+                    admin_url('options-media.php'),
+                    $large_width,
+                    self::getOptionsLink(),
+                    $scaling_value,
+                    PLUGIN_NAME
+                ),
+                [
+                    'type'        => 'error',
+                    'dismissible' => false,
+                    'attributes'  => [
+                        'data-slug'   => PLUGIN_SLUG,
+                        'data-action' => 'scale-original'
+                    ]
+                ]
             );
             return;
         }
@@ -135,7 +152,7 @@ class PluginService extends Singleton
 
         check_admin_referer(FIELD_NAME);
 
-        $settings = self::getPluginSettings();
+        $settings = self::$plugin_settings;
 
         foreach (self::allowedImageTypes() as $ait) {
             if (isset($_POST[$ait]) && !empty($_POST[$ait])) {
@@ -197,39 +214,15 @@ class PluginService extends Singleton
 
     public static function getTemporaryDisablePeriod(): int
     {
-        $period = 60; // minutes
+        $default_period = 60; // minutes
 
-        $filtered_period = apply_filters(self::$namespace . '/temporary-disable-period', $period);
+        $filtered_period = apply_filters(self::$namespace . '/temporary-disable-period', $default_period);
 
-        if ($filtered_period < 0) {
-            self::$negative_disable_period_entered = true;
-            return 3600; // Default to 1 hour in seconds
+        if (!is_numeric($filtered_period) || $filtered_period <= 0) {
+            return 0;
         }
 
-        return $filtered_period * 60; // Convert minutes to seconds
-    }
-
-    public function addNegativePeriodNotice()
-    {
-        if (!self::$negative_disable_period_entered) {
-            return false;
-        }
-
-        if (!current_user_can(self::getManageDashWidgetCap())) {
-            return false;
-        }
-
-        if (self::isTemporarilyDisabled()) {
-            return false;
-        }
-
-        $message = sprintf(__('The temporary disable period for %s plugin cannot be negative. The default value of 1 hour will be used.', 'webpc'), PLUGIN_NAME);
-
-        $this->notices->add(
-            $this->notice->message($message)
-            ->dismissible(false)
-            ->type('warning')
-        );
+        return (int) $filtered_period * 60; // Convert minutes to seconds
     }
 
     public static function getSettingsPageParentSlug()
@@ -356,8 +349,16 @@ class PluginService extends Singleton
             return false;
         }
 
-        $this->notices->add(
-            $this->notice->message($message)->type('success')
+        wp_admin_notice(
+            $message,
+            [
+                'type'        => 'success',
+                'dismissible' => true,
+                'attributes'  => [
+                    'data-slug'   => PLUGIN_SLUG,
+                    'data-action' => 'no-updates'
+                ]
+            ]
         );
     }
 
@@ -370,8 +371,16 @@ class PluginService extends Singleton
             return false;
         }
 
-        $this->notices->add(
-            $this->notice->message($message)->type('success')
+        wp_admin_notice(
+            $message,
+            [
+                'type'        => 'success',
+                'dismissible' => true,
+                'attributes'  => [
+                    'data-slug'   => PLUGIN_SLUG,
+                    'data-action' => 'updated'
+                ]
+            ]
         );
     }
 
@@ -464,7 +473,7 @@ class PluginService extends Singleton
 
     public static function getSettingsPageFields(): array
     {
-        $settings = self::getPluginSettings();
+        $settings = self::$plugin_settings;
 
         if (!$settings) {
             return [];
@@ -540,52 +549,50 @@ class PluginService extends Singleton
 
     public static function isTemporarilyDisabled(): bool
     {
-        $settings = self::getPluginSettings();
-        $timestamp = $settings['temporary_disable_timestamp'];
+        $timestamp = self::$plugin_settings['temporary_disable_timestamp'];
 
-        $disable_period = self::getTemporaryDisablePeriod();
         $current_time = current_time('timestamp');
 
-        if ($timestamp > 0 && ($timestamp + $disable_period) > $current_time) {
+        if ($timestamp > 0 && ($timestamp + self::$temp_disable_period) > $current_time) {
             return true;
         }
 
         // Reset and trigger temporary-disablement-has-ended action if time has expired
-        if ($timestamp > 0 && ($timestamp + $disable_period) <= $current_time) {
+        if ($timestamp > 0 && ($timestamp + self::$temp_disable_period) <= $current_time) {
             self::enablePlugin();
         }
 
         return false;
     }
 
-    public static function getDisableMessage(): string
+    public function getDisableMessage(): string
     {
-        $settings = self::getPluginSettings();
-        $timestamp = $settings['temporary_disable_timestamp'];
-        $disable_period = self::getTemporaryDisablePeriod();
-        $until = $timestamp + $disable_period;
-        $date_format = self::getDisableMsgDateFormat();
-
-        return sprintf(__('The %s plugin (<strong>image optimization</strong>) is temporarily disabled until <strong>%s</strong>', 'webpc'), PLUGIN_NAME, date($date_format, $until));
+        return sprintf(
+            __('The %s plugin (<b>image optimization</b>) is temporarily disabled until <b>%s</b>.', 'webpc'),
+            PLUGIN_NAME,
+            date(
+                self::getDisableMsgDateFormat(),
+                self::$plugin_settings['temporary_disable_timestamp'] + self::$temp_disable_period
+            )
+        );
     }
 
-    public static function enablePlugin()
+    private static function enablePlugin()
     {
-        $settings = self::getPluginSettings();
-        $was_disabled = $settings['temporary_disable_timestamp'] > 0;
-        $settings['temporary_disable_timestamp'] = 0;
-        update_option(FIELD_NAME, $settings);
+        $was_disabled = self::$plugin_settings['temporary_disable_timestamp'] > 0;
+        self::$plugin_settings['temporary_disable_timestamp'] = 0;
+        update_option(FIELD_NAME, self::$plugin_settings);
 
         if ($was_disabled) {
             do_action(DOMAIN . '/temporary-disablement-has-ended');
         }
     }
 
-    public static function disablePlugin()
+    private static function disablePlugin()
     {
-        $settings = self::getPluginSettings();
-        $settings['temporary_disable_timestamp'] = current_time('timestamp');
-        update_option(FIELD_NAME, $settings);
+        self::$plugin_settings['temporary_disable_timestamp'] = current_time('timestamp');
+        update_option(FIELD_NAME, self::$plugin_settings);
+
         do_action(DOMAIN . '/plugin-temporarily-disabled');
     }
 
@@ -607,24 +614,32 @@ class PluginService extends Singleton
 
     public function renderDashboardWidget()
     {
-        $is_disabled = self::isTemporarilyDisabled();
-        $disable_period_message = $this->infoDisableMessage(self::getTemporaryDisablePeriod()); ?>
+        ob_start(); ?>
+            <div id="webp-converter-dashboard-widget">
+                <form method="post" action="admin-post.php">
+                    <input type="hidden" name="action" value="toggle_webp_converter" />
+                    <?php wp_nonce_field('toggle_webp_converter'); ?>
 
-        <div id="webp-converter-dashboard-widget">
-            <form method="post" action="admin-post.php">
-                <input type="hidden" name="action" value="toggle_webp_converter" />
-                <?php wp_nonce_field('toggle_webp_converter'); ?>
-
-                <?php if ($is_disabled) { ?>
-                    <input type="submit" name="enable_plugin" value="<?php esc_attr_e('Enable Image Optimization', 'webpc'); ?>" class="button-primary" />
-                    <p><?php echo self::getDisableMessage(); ?></p>
-                <?php } else { ?>
-                    <input type="submit" name="disable_plugin" value="<?php esc_attr_e('Disable Image Optimization', 'webpc'); ?>" class="button-primary" />
-                    <p><?php echo $disable_period_message; ?></p>
-                <?php } ?>
-            </form>
-        </div>
-        <?php
+                    <?php if (self::isTemporarilyDisabled()) { ?>
+                        <input
+                            type="submit"
+                            name="enable_plugin"
+                            value="<?php esc_attr_e('Enable Image Optimization', 'webpc'); ?>"
+                            class="button-primary"
+                        />
+                        <p><?php echo $this->getDisableMessage(); ?></p>
+                    <?php } else { ?>
+                        <input
+                            type="submit"
+                            name="disable_plugin"
+                            value="<?php esc_attr_e('Disable Image Optimization', 'webpc'); ?>"
+                            class="button-primary"
+                        />
+                        <p><?php echo $this->infoDisableMessage(self::$temp_disable_period); ?></p>
+                    <?php } ?>
+                </form>
+            </div>
+        <?php echo ob_get_clean();
     }
 
     public function addTemporaryDisableNotice()
@@ -633,12 +648,18 @@ class PluginService extends Singleton
             return false;
         }
 
-        $message = self::getDisableMessage();
+        $message = $this->getDisableMessage();
 
-        $this->notices->add(
-            $this->notice->message($message)
-            ->dismissible(false)
-            ->type('info')
+        wp_admin_notice(
+            $message,
+            [
+                'type'        => 'info',
+                'dismissible' => false,
+                'attributes'  => [
+                    'data-slug'   => PLUGIN_SLUG,
+                    'data-action' => 'temp-disable'
+                ]
+            ]
         );
     }
 
@@ -646,7 +667,13 @@ class PluginService extends Singleton
     {
         $time_display = self::convertSecondsToHoursAndMinutes($seconds);
 
-        return sprintf(__('If you disable image optimization, uploaded images will not be automatically converted and optimized for the web in WebP format for <strong>%s</strong>. The function will then be automatically reactivated. You can enable image optimization at any time before this period expires.', 'webpc'), $time_display);
+        return sprintf(
+            __(
+                'If you disable image optimization, uploaded images will not be automatically converted and optimized for the web in WebP format for <strong>%s</strong>. The function will then be automatically reactivated. You can enable image optimization at any time before this period expires.',
+                'webpc'
+            ),
+            $time_display
+        );
     }
 
     public function handleToggleWebPConverter()

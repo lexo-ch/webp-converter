@@ -2,18 +2,10 @@
 
 namespace LEXO\WebPC\Core\Traits;
 
-use LEXO\WebPC\Core\Notices\Notice;
-use LEXO\WebPC\Core\Notices\Notices;
-
 trait Helpers
 {
-    public $notice;
-    public $notices;
-
     public function __construct()
     {
-        $this->notice = new Notice();
-        $this->notices = new Notices();
     }
 
     public static function getClassName($classname)
