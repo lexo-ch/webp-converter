@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/lexo-ch/webp-converter/compare/v2.0.1...v2.0.2) (2025-03-14)
+
+
+### Bug Fixes
+
+* **core:** Change action for wp_admin_notice() ([e4325e5](https://github.com/lexo-ch/webp-converter/commit/e4325e5a6fd70d0b75fa887ba1f895473da2d97b))
+
 ## [2.0.1](https://github.com/lexo-ch/webp-converter/compare/v2.0.0...v2.0.1) (2025-03-14)
 
 
