@@ -2,8 +2,8 @@
 Contributors: mpuzovic
 Donate link: https://www.lexo.ch
 Tags: plugin, converter, webp, jpg, jpeg, png
-Requires at least: 4.7
-Tested up to: 6.4.3
+Requires at least: 6.4
+Tested up to: 6.7.2
 Stable tag: 1.3.6
 Requires PHP: 7.4.1
 License: GPLv2 or later

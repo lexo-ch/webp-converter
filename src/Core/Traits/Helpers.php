@@ -2,18 +2,10 @@
 
 namespace LEXO\WebPC\Core\Traits;
 
-use LEXO\WebPC\Core\Notices\Notice;
-use LEXO\WebPC\Core\Notices\Notices;
-
 trait Helpers
 {
-    public $notice;
-    public $notices;
-
     public function __construct()
     {
-        $this->notice = new Notice();
-        $this->notices = new Notices();
     }
 
     public static function getClassName($classname)
@@ -36,5 +28,18 @@ trait Helpers
     public static function printr(mixed $data): string
     {
         return "<pre>" . \print_r($data, true) . "</pre>";
+    }
+
+    public static function convertSecondsToHoursAndMinutes(int $seconds): string
+    {
+        $minutes = floor($seconds / 60);
+        $hours = floor($minutes / 60);
+        $remaining_minutes = $minutes % 60;
+
+        if ($hours > 0) {
+            return $remaining_minutes === 0 ? sprintf('%dh', $hours) : sprintf('%dh %dmin', $hours, $remaining_minutes);
+        }
+
+        return sprintf('%dmin', $remaining_minutes);
     }
 }

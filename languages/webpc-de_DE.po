@@ -1,39 +1,40 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: LEXO WebP Converter\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-14 15:39+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"PO-Revision-Date: 2025-03-14 15:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: Deutsch\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.4; wp-6.2.2\n"
+"X-Loco-Version: 2.7.1; wp-6.7.2\n"
 "X-Domain: webpc"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:608
 #, php-format
 msgid "%s Control"
-msgstr ""
+msgstr "%s Kontrolle"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:502
 msgid ""
 "Applies to WebP image created from uploaded JPG/JPEG image. Acceptable "
 "values range from %d to %d."
 msgstr ""
+"Gilt für WebP-Bilder, die aus hochgeladenen JPG-/JPEG-Bildern erstellt "
+"wurden. Zulässige Werte liegen zwischen %d und %d."
 
 #. Description of the plugin
 msgid "Automatically converts images to WebP format upon upload."
-msgstr ""
+msgstr "Konvertiert Bilder beim Hochladen automatisch in das WebP-Format."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:531
 msgid "Backup original image without scaling or compression"
-msgstr ""
+msgstr "Originalbild ohne Skalierung oder Komprimierung sichern"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:532
 msgid ""
@@ -41,26 +42,30 @@ msgid ""
 "\"Keep smaller image\" is enabled and original image is smaller than "
 "converted WebP (and therefore we keep original instead of WebP)."
 msgstr ""
+"Es werden keine Backups erstellt, wenn das Originalbild WebP ist oder die "
+"Option „Kleineres Bild behalten“ aktiviert ist und das Originalbild kleiner "
+"als das konvertierte WebP ist (und wir daher das Original anstelle von WebP "
+"behalten)."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:17
 msgid "Compression quality settings"
-msgstr ""
+msgstr "Einstellungen für die Komprimierungsqualität"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:635
 msgid "Disable Image Optimization"
-msgstr ""
+msgstr "Bildoptimierung deaktivieren"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:627
 msgid "Enable Image Optimization"
-msgstr ""
+msgstr "Bildoptimierung aktivieren"
 
 #. URI of the plugin
 msgid "https://github.com/lexo-ch/webp-converter/"
-msgstr ""
+msgstr "https://github.com/lexo-ch/webp-converter/"
 
 #. Author URI of the plugin
 msgid "https://www.lexo.ch"
-msgstr ""
+msgstr "https://www.lexo.ch"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:671
 #, php-format
@@ -70,55 +75,61 @@ msgid ""
 "The function will then be automatically reactivated. You can enable image "
 "optimization at any time before this period expires."
 msgstr ""
+"Wenn Sie die Bildoptimierung deaktivieren, werden hochgeladene Bilder "
+"<strong>%s</strong> lang nicht automatisch im WebP-Format konvertiert und "
+"für das Web optimiert. Anschliessend wird die Funktion automatisch wieder "
+"aktiviert. Sie können die Bildoptimierung jederzeit vor Ablauf dieses "
+"Zeitraums aktivieren."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:500
 msgid "Image compression in percentages."
-msgstr ""
+msgstr "Bildkomprimierung in Prozent."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:510
 msgid "Keep smaller image (WebP or original, whatever is smaller)"
 msgstr ""
+"Kleineres Bild behalten (WebP oder Original, je nachdem, was kleiner ist)"
 
 #. Author of the plugin
 msgid "LEXO GmbH"
-msgstr ""
+msgstr "LEXO GmbH"
 
 #. Name of the plugin
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:15
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:391
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:392
 msgid "LEXO WebP Converter"
-msgstr ""
+msgstr "LEXO WebP Converter"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:96
 msgid "Manually check for update"
-msgstr ""
+msgstr "Manuell nach Updates suchen"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:89
 #, php-format
 msgid "Next automatic update check at <b>%s</b>."
-msgstr ""
+msgstr "Nächste automatische Updateprüfung um <b>%s</b>."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:316
 #, php-format
 msgid "Plugin %s is up to date."
-msgstr ""
+msgstr "Plugin %s ist aktuell."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/SettingsPage.php:77
 msgid "Save settings"
-msgstr ""
+msgstr "Einstellungen speichern"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:518
 msgid "Scale down uploaded images."
-msgstr ""
+msgstr "Hochgeladene Bilder verkleinern."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:307
 msgid "Security check failed."
-msgstr ""
+msgstr "Sicherheitsüberprüfung fehlgeschlagen."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:282
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:571
 #, php-format
@@ -126,16 +137,20 @@ msgid ""
 "The %s plugin (<b>image optimization</b>) is temporarily disabled until <b>"
 "%s</b>."
 msgstr ""
+"Das %s-Plugin (<b>Bildoptimierung</b>) ist bis <b>%s</b> vorübergehend "
+"deaktiviert."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:101
 msgid ""
 "The GD PHP extension is required for the LEXO WebP Converter plugin to work."
 msgstr ""
+"Damit das LEXO WebP Converter-Plugin funktioniert, ist die GD PHP-"
+"Erweiterung erforderlich."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:180
 #, php-format
 msgid "The settings for the %s have been successfully saved."
-msgstr ""
+msgstr "Die Einstellungen für %s wurden erfolgreich gespeichert."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:124
 #, php-format
@@ -144,6 +159,9 @@ msgid ""
 "is larger than the <a href=\"%s\">value used for scaling</a> (<b>%d</b>) in "
 "%s plugin. This could lead to potential issues."
 msgstr ""
+"Der Wert der <a href=\"%s\">Bildgröße \"groß\"</a> (<b>%d</b>) ist größer "
+"als der <a href=\"%s\">für die Skalierung verwendete Wert</a> (<b>%d</b>) im "
+"%s-Plugin. Dies könnte zu potenziellen Problemen führen."
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:520
 #, php-format
@@ -155,8 +173,15 @@ msgid ""
 "size</a>, or %d. You can choose any value within the range of %d (the larger "
 "of the \"large\" image size width or %d) to %d."
 msgstr ""
+"Diese Einstellung betrifft alle hochgeladenen Bilder, unabhängig vom Typ. "
+"Überschreitet ein Bild die von uns festgelegte Breite oder Höhe, wird es "
+"automatisch verkleinert, um in diese Breite zu passen. Ausgangspunkt für "
+"diese Breite ist der grössere von zwei Werten: <a href=\"%s\">die für die "
+"Bildgrösse „gross“ festgelegte Breite</a> oder %d. Sie können einen "
+"beliebigen Wert zwischen %d (der grössere Wert aus „gross“ oder %d) und %d "
+"wählen.\n"
 
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:150
 #: ../../../../../../../Documents/GitHub/webp-converter/src/Core/Plugin/PluginService.php:682
 msgid "This user doesn't have permission to run this plugin."
-msgstr ""
+msgstr "Dieser Benutzer hat keine Berechtigung, dieses Plugin auszuführen."

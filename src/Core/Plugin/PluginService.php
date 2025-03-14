@@ -26,15 +26,18 @@ class PluginService extends Singleton
 {
     use Helpers;
 
-    private static string $namespace    = 'custom-plugin-namespace';
-    protected static $instance          = null;
+    private static string $namespace        = 'custom-plugin-namespace';
+    protected static $instance              = null;
 
-    private const CHECK_UPDATE          = 'check-update-' . PLUGIN_SLUG;
-    private const MANAGE_PLUGIN_CAP     = 'administrator';
-    private const SETTINGS_PARENT_SLUG  = 'options-general.php';
-    private const SETTINGS_PAGE_SLUG    = 'settings-' . PLUGIN_SLUG;
-    private bool $can_manage_plugin     = false;
-    public const INIT_SCALE_SIZE        = 1920;
+    private const CHECK_UPDATE              = 'check-update-' . PLUGIN_SLUG;
+    private const MANAGE_PLUGIN_CAP         = 'administrator';
+    private const MANAGE_DASH_WIDGET        = 'edit_posts';
+    private const SETTINGS_PARENT_SLUG      = 'options-general.php';
+    private const SETTINGS_PAGE_SLUG        = 'settings-' . PLUGIN_SLUG;
+    private bool $can_manage_plugin         = false;
+    public const INIT_SCALE_SIZE            = 1920;
+    private static int $temp_disable_period = 0;
+    public static array $plugin_settings    = [];
 
     private $settingsPage;
 
@@ -55,9 +58,15 @@ class PluginService extends Singleton
             $this->can_manage_plugin = current_user_can(self::getManagePluginCap());
         }
 
+        self::$plugin_settings = self::getPluginSettings();
+
         $this->settingsPage = new SettingsPage();
 
+        self::$temp_disable_period = self::getTemporaryDisablePeriod();
+
         add_action('admin_post_' . self::CHECK_UPDATE, [$this, 'checkForUpdateManually']);
+        add_action('wp_dashboard_setup', [$this, 'addDashboardWidget']);
+        add_action('admin_post_toggle_webp_converter', [$this, 'handleToggleWebPConverter']);
     }
 
     public function handleDeleteAttachment($post_id)
@@ -88,12 +97,18 @@ class PluginService extends Singleton
     public function checkForGD()
     {
         if (!extension_loaded('gd') || !function_exists('gd_info')) {
-            $this->notices->add(
-                $this->notice->message(
-                    __('The GD PHP extension is required for the LEXO WebP Converter plugin to work.', 'webpc')
-                )
-                ->type('error')
+            wp_admin_notice(
+                __('The GD PHP extension is required for the LEXO WebP Converter plugin to work.', 'webpc'),
+                [
+                    'type'        => 'error',
+                    'dismissible' => false,
+                    'attributes'  => [
+                        'data-slug'   => PLUGIN_SLUG,
+                        'data-action' => 'gd-missing'
+                    ]
+                ]
             );
+
             return;
         }
     }
@@ -101,22 +116,29 @@ class PluginService extends Singleton
     public function compareWithLargeImageSize()
     {
         $large_width = (int) get_option('large_size_w');
-        $scaling_value = (int) self::getPluginSettings()['scale-original-to'];
+        $scaling_value = (int) self::$plugin_settings['scale-original-to'];
 
         if ($large_width > $scaling_value) {
-            $this->notices->add(
-                $this->notice->message(
-                    sprintf(
-                        __('The value of the <a href="%s">"large" image size width</a> (<b>%d</b>) is larger than the <a href="%s">value used for scaling</a> (<b>%d</b>) in %s plugin. This could lead to potential issues.', 'webpc'),
-                        admin_url('options-media.php'),
-                        $large_width,
-                        self::getOptionsLink(),
-                        $scaling_value,
-                        PLUGIN_NAME
-                    )
-                )
-                ->dismissible(false)
-                ->type('error')
+            wp_admin_notice(
+                sprintf(
+                    __(
+                        'The value of the <a href="%s">"large" image size width</a> (<b>%d</b>) is larger than the <a href="%s">value used for scaling</a> (<b>%d</b>) in %s plugin. This could lead to potential issues.',
+                        'webpc'
+                    ),
+                    admin_url('options-media.php'),
+                    $large_width,
+                    self::getOptionsLink(),
+                    $scaling_value,
+                    PLUGIN_NAME
+                ),
+                [
+                    'type'        => 'error',
+                    'dismissible' => false,
+                    'attributes'  => [
+                        'data-slug'   => PLUGIN_SLUG,
+                        'data-action' => 'scale-original'
+                    ]
+                ]
             );
             return;
         }
@@ -125,12 +147,12 @@ class PluginService extends Singleton
     public function saveSettings()
     {
         if (!current_user_can(self::getManagePluginCap())) {
-            wp_die(__('This user doesn\'t have persmission to run this plugin.', 'webpc'));
+            wp_die(__('This user doesn\'t have permission to run this plugin.', 'webpc'));
         }
 
         check_admin_referer(FIELD_NAME);
 
-        $settings = self::getPluginSettings();
+        $settings = self::$plugin_settings;
 
         foreach (self::allowedImageTypes() as $ait) {
             if (isset($_POST[$ait]) && !empty($_POST[$ait])) {
@@ -173,6 +195,34 @@ class PluginService extends Singleton
         $capability = apply_filters(self::$namespace . '/options-page/capability', $capability);
 
         return $capability;
+    }
+
+    public static function getManageDashWidgetCap()
+    {
+        $capability = self::MANAGE_DASH_WIDGET;
+
+        $filtered_capability = apply_filters(self::$namespace . '/dashboard-widget/capability', $capability);
+
+        return $filtered_capability;
+    }
+
+    public static function getDisableMsgDateFormat(): string
+    {
+        $date_format = 'd.m.Y H:i:s';
+        return apply_filters(self::$namespace . '/dashboard-widget/date-format', $date_format);
+    }
+
+    public static function getTemporaryDisablePeriod(): int
+    {
+        $default_period = 60; // minutes
+
+        $filtered_period = apply_filters(self::$namespace . '/temporary-disable-period', $default_period);
+
+        if (!is_numeric($filtered_period) || $filtered_period <= 0) {
+            return 0;
+        }
+
+        return (int) $filtered_period * 60; // Convert minutes to seconds
     }
 
     public static function getSettingsPageParentSlug()
@@ -299,8 +349,16 @@ class PluginService extends Singleton
             return false;
         }
 
-        $this->notices->add(
-            $this->notice->message($message)->type('success')
+        wp_admin_notice(
+            $message,
+            [
+                'type'        => 'success',
+                'dismissible' => true,
+                'attributes'  => [
+                    'data-slug'   => PLUGIN_SLUG,
+                    'data-action' => 'no-updates'
+                ]
+            ]
         );
     }
 
@@ -313,8 +371,16 @@ class PluginService extends Singleton
             return false;
         }
 
-        $this->notices->add(
-            $this->notice->message($message)->type('success')
+        wp_admin_notice(
+            $message,
+            [
+                'type'        => 'success',
+                'dismissible' => true,
+                'attributes'  => [
+                    'data-slug'   => PLUGIN_SLUG,
+                    'data-action' => 'updated'
+                ]
+            ]
         );
     }
 
@@ -339,7 +405,8 @@ class PluginService extends Singleton
                 ]
             ],
             'keep-smaller' => 'on',
-            'scale-original-to' => self::getInitialScaleSize()
+            'scale-original-to' => self::getInitialScaleSize(),
+            'temporary_disable_timestamp' => 0
         ];
     }
 
@@ -406,7 +473,7 @@ class PluginService extends Singleton
 
     public static function getSettingsPageFields(): array
     {
-        $settings = self::getPluginSettings();
+        $settings = self::$plugin_settings;
 
         if (!$settings) {
             return [];
@@ -478,5 +545,152 @@ class PluginService extends Singleton
                 admin_url('admin-post.php')
             )
         );
+    }
+
+    public static function isTemporarilyDisabled(): bool
+    {
+        $timestamp = self::$plugin_settings['temporary_disable_timestamp'];
+
+        $current_time = current_time('timestamp');
+
+        if ($timestamp > 0 && ($timestamp + self::$temp_disable_period) > $current_time) {
+            return true;
+        }
+
+        // Reset and trigger temporary-disablement-has-ended action if time has expired
+        if ($timestamp > 0 && ($timestamp + self::$temp_disable_period) <= $current_time) {
+            self::enablePlugin();
+        }
+
+        return false;
+    }
+
+    public function getDisableMessage(): string
+    {
+        return sprintf(
+            __('The %s plugin (<b>image optimization</b>) is temporarily disabled until <b>%s</b>.', 'webpc'),
+            PLUGIN_NAME,
+            date(
+                self::getDisableMsgDateFormat(),
+                self::$plugin_settings['temporary_disable_timestamp'] + self::$temp_disable_period
+            )
+        );
+    }
+
+    private static function enablePlugin()
+    {
+        $was_disabled = self::$plugin_settings['temporary_disable_timestamp'] > 0;
+        self::$plugin_settings['temporary_disable_timestamp'] = 0;
+        update_option(FIELD_NAME, self::$plugin_settings);
+
+        if ($was_disabled) {
+            do_action(DOMAIN . '/temporary-disablement-has-ended');
+        }
+    }
+
+    private static function disablePlugin()
+    {
+        self::$plugin_settings['temporary_disable_timestamp'] = current_time('timestamp');
+        update_option(FIELD_NAME, self::$plugin_settings);
+
+        do_action(DOMAIN . '/plugin-temporarily-disabled');
+    }
+
+    public function addDashboardWidget()
+    {
+        if (!current_user_can(self::getManageDashWidgetCap())) {
+            return;
+        }
+
+        wp_add_dashboard_widget(
+            'webp_converter_dashboard_widget',
+            sprintf(
+                __('%s Control', 'webpc'),
+                PLUGIN_NAME
+            ),
+            [$this, 'renderDashboardWidget']
+        );
+    }
+
+    public function renderDashboardWidget()
+    {
+        ob_start(); ?>
+            <div id="webp-converter-dashboard-widget">
+                <form method="post" action="admin-post.php">
+                    <input type="hidden" name="action" value="toggle_webp_converter" />
+                    <?php wp_nonce_field('toggle_webp_converter'); ?>
+
+                    <?php if (self::isTemporarilyDisabled()) { ?>
+                        <input
+                            type="submit"
+                            name="enable_plugin"
+                            value="<?php esc_attr_e('Enable Image Optimization', 'webpc'); ?>"
+                            class="button-primary"
+                        />
+                        <p><?php echo $this->getDisableMessage(); ?></p>
+                    <?php } else { ?>
+                        <input
+                            type="submit"
+                            name="disable_plugin"
+                            value="<?php esc_attr_e('Disable Image Optimization', 'webpc'); ?>"
+                            class="button-primary"
+                        />
+                        <p><?php echo $this->infoDisableMessage(self::$temp_disable_period); ?></p>
+                    <?php } ?>
+                </form>
+            </div>
+        <?php echo ob_get_clean();
+    }
+
+    public function addTemporaryDisableNotice()
+    {
+        if (!self::isTemporarilyDisabled()) {
+            return false;
+        }
+
+        $message = $this->getDisableMessage();
+
+        wp_admin_notice(
+            $message,
+            [
+                'type'        => 'info',
+                'dismissible' => false,
+                'attributes'  => [
+                    'data-slug'   => PLUGIN_SLUG,
+                    'data-action' => 'temp-disable'
+                ]
+            ]
+        );
+    }
+
+    private function infoDisableMessage(int $seconds): string
+    {
+        $time_display = self::convertSecondsToHoursAndMinutes($seconds);
+
+        return sprintf(
+            __(
+                'If you disable image optimization, uploaded images will not be automatically converted and optimized for the web in WebP format for <strong>%s</strong>. The function will then be automatically reactivated. You can enable image optimization at any time before this period expires.',
+                'webpc'
+            ),
+            $time_display
+        );
+    }
+
+    public function handleToggleWebPConverter()
+    {
+        if (!current_user_can(self::getManageDashWidgetCap())) {
+            wp_die(__('This user doesn\'t have permission to run this plugin.', 'webpc'));
+        }
+
+        check_admin_referer('toggle_webp_converter');
+
+        if (isset($_POST['disable_plugin'])) {
+            self::disablePlugin();
+        } else {
+            self::enablePlugin();
+        }
+
+        wp_safe_redirect(admin_url());
+        exit;
     }
 }

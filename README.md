@@ -7,7 +7,7 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 
 ---
 ## Compatibility
-- WordPress version `>=4.7`. Tested and works fine up to `6.4.3`.
+- WordPress version `>=6.4`. Tested and works fine up to `6.7.2`.
 - PHP version `>=7.4.1`. Tested and works fine up to `8.3.0`.
 
 ---
@@ -43,6 +43,21 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 `apply_filters('webpc/options-page/parent-slug', $args);`
 - $args (string) Change parent slug for options page.
 
+#### - `webpc/temporary-disable-period`
+*Parameters*
+`apply_filters('webpc/temporary-disable-period', $args);`
+- $args (int) Change temporary disable period in mins.
+
+#### - `webpc/dashboard-widget/capability`
+*Parameters*
+`apply_filters('webpc/dashboard-widget/capability', $args);`
+- $args (string) Specify the capability that can see the dashboard widget.
+
+#### - `webpc/dashboard-widget/date-format`
+*Parameters*
+`apply_filters('webpc/dashboard-widget/date-format', $args);`
+- $args (string) Specify the date format for displaying the disable period in message. The default format is `d.m.Y H:i:s`.
+
 ---
 ## Actions
 #### - `webpc/init`
@@ -50,6 +65,12 @@ Release tags are created with Semantic versioning in mind. Commit messages were 
 
 #### - `webpc/localize/admin-webpc.js`
 - Fires right before LEXO WebP Converter admin script has been enqueued.
+
+#### - `webpc/plugin-temporarily-disabled`
+- Fires when the plugin is temporarily disabled via the dashboard widget.
+
+#### - `webpc/temporary-disablement-has-ended`
+- Fires when the plugin is re-enabled via the dashboard widget or after temporary disable period.
 
 ---
 ## Changelog
