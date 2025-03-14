@@ -1,3 +1,23 @@
+# [2.0.0](https://github.com/lexo-ch/webp-converter/compare/v1.3.6...v2.0.0) (2025-03-14)
+
+
+### Bug Fixes
+
+* **core:** LEXO WebP Converter Dashboard Widget Control ([6c14b4f](https://github.com/lexo-ch/webp-converter/commit/6c14b4f9d779af257ab71b08d24fae1bbb614ec6))
+* **core:** update dependencies ([7174a20](https://github.com/lexo-ch/webp-converter/commit/7174a205c3c416227412d5df6308d41acc03534f))
+* **core:** Update messages ([9a2ae0b](https://github.com/lexo-ch/webp-converter/commit/9a2ae0b168e2584c08ca642e658b59f725d5cdb5))
+* **translations:** Add German translations ([262e378](https://github.com/lexo-ch/webp-converter/commit/262e3789b8d107716e37f704d9f817879b8e6336))
+
+
+### Features
+
+* **core:** Add option to temporary disable image optimization ([6d00a34](https://github.com/lexo-ch/webp-converter/commit/6d00a3498e4348de7d30bfba7fb0cfdbcfc1559f))
+
+
+### BREAKING CHANGES
+
+* **core:** The plugin now uses wp_admin_notice() function introduced in WP@6.4
+
 ## [1.3.6](https://github.com/lexo-ch/webp-converter/compare/v1.3.5...v1.3.6) (2024-08-27)
 
 
